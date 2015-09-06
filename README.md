@@ -46,6 +46,6 @@ Also, notice the following conventions:
 * We separate the browser scripts to two bundles:
   * `vendor.min.js` has our dependencies
   * `app.min.js` has our code
-* Dependencies should be managed in `npm`, and **not `bower`**. [Add dependencies to this list](https://github.com/okfn/datapackagist/blob/master/gulpfile.js#L24) to include them in `vendor.min.js`
+* Dependencies should be managed in `npm`, and **not `bower`**. [Add dependencies to this list](https://github.com/okfn/opentrials-prototype/blob/master/gulpfile.js#L24) to include them in `vendor.min.js`
 
 If you are new to some of the tooling we use - don't worry, it is not difficult! Refer to [Node Modules](https://nodejs.org/api/modules.html), [Mocha](http://mochajs.org/), [Chai](http://chaijs.com/), [Browserify](http://browserify.org/), [Gulp](http://gulpjs.com/) and [BrowserSync](http://www.browsersync.io/) for further information. These are all key tools to organizing our code and workflow.
