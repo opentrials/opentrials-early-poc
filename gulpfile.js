@@ -7,19 +7,25 @@ var resolve = require('resolve');
 var source = require('vinyl-source-stream');
 var buffer = require('vinyl-buffer');
 var rename = require('gulp-rename');
+var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var minifyCss = require('gulp-minify-css');
 var sourcemaps = require('gulp-sourcemaps');
 var less = require('gulp-less');
 var prefixer = require('gulp-autoprefixer');
 var baseDir = './prototype';
+var nodeModulesDir = baseDir + '/../node_modules';
 var srcDir = baseDir + '/ui';
 var publicDir = baseDir + '/public';
+var publicStylesDir = publicDir + '/styles';
+var publicScriptsDir = publicDir + '/scripts';
+var publicFontsDir = publicDir + '/fonts';
 var stylesDir = srcDir + '/styles';
 var scriptsDir = srcDir + '/scripts';
 var vendorJS = 'vendor.min.js';
 var appJS = 'app.min.js';
 var appCSS = 'app.min.css';
+var vendorCSS = 'vendor.min.css';
 var frontendDependencies = [
   'bootstrap'
 ];
@@ -35,7 +41,7 @@ function scriptPipeline(bundle, outfile) {
     .pipe(buffer())
     .pipe(uglify())
     //.pipe(sourcemaps.write(publicDir))
-    .pipe(gulp.dest(publicDir));
+    .pipe(gulp.dest(publicScriptsDir));
 
 }
 
@@ -44,13 +50,13 @@ function scriptPipeline(bundle, outfile) {
  */
 function distVendorScripts() {
 
-  var bundler = browserify({});
-
-  frontendDependencies.forEach(function(id) {
-    bundler.require(resolve.sync(id), {expose: id});
-  });
-
-  return scriptPipeline(bundler.bundle(), vendorJS);
+  return gulp
+    .src([
+      nodeModulesDir + '/jquery/dist/jquery.min.js',
+      nodeModulesDir + '/bootstrap/dist/js/bootstrap.min.js'
+    ])
+    .pipe(concat(vendorJS))
+    .pipe(gulp.dest(publicScriptsDir));
 
 }
 
@@ -78,8 +84,6 @@ function distAppScripts() {
         scriptPipeline(bundler.bundle(), appJS);
       });
   }
-  console.log(scriptsDir + '/app.js');
-  console.log(appJS);
   return scriptPipeline(bundler.bundle(), appJS)
            .pipe(reload({stream: true}));
 
@@ -88,7 +92,7 @@ function distAppScripts() {
 /**
  * Provide frontend styles as a single bundle.
  */
-function distStyles() {
+function distAppStyles() {
 
   return gulp
     .src(stylesDir + '/app.less')
@@ -98,11 +102,40 @@ function distStyles() {
     .pipe(sourcemaps.write(publicDir))
     .pipe(minifyCss({compatibility: 'ie8'}))
     .pipe(rename(appCSS))
-    .pipe(gulp.dest(publicDir));
+    .pipe(gulp.dest(publicStylesDir));
 
 }
 
-gulp.task('scripts', distAppScripts);
-gulp.task('styles', distStyles);
-gulp.task('vendor', distVendorScripts);
-gulp.task('default', ['scripts', 'styles', 'vendor']);
+function distVendorStyles() {
+
+  return gulp
+    .src([
+      nodeModulesDir + '/bootstrap/dist/css/bootstrap.min.css'
+    ])
+    .pipe(concat(vendorCSS))
+    .pipe(gulp.dest(publicStylesDir));
+
+}
+
+function distVendorFonts() {
+
+  return gulp
+    .src([
+      nodeModulesDir + '/bootstrap/dist/fonts/*'
+    ])
+    .pipe(gulp.dest(publicFontsDir));
+
+}
+
+gulp.task('app.scripts', distAppScripts);
+gulp.task('app.styles', distAppStyles);
+gulp.task('vendor.scripts', distVendorScripts);
+gulp.task('vendor.styles', distVendorStyles);
+gulp.task('vendor.fonts', distVendorFonts);
+gulp.task('default', [
+  'app.scripts',
+  'app.styles',
+  'vendor.scripts',
+  'vendor.styles',
+  'vendor.fonts'
+]);

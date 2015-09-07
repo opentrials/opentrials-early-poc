@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="/styles/vendor.min.css" />
+    <link rel="stylesheet" type="text/css" href="/styles/app.min.css" />
+  </head>
+  <body>
+    {% include "partials/header.html"  %}
+    {% include "partials/navigation.html"  %}
+    {% block content %}{% endblock %}
+    {% include "partials/footer.html"  %}
+    <script src="/scripts/vendor.min.js"></script>
+    <script src="/scripts/app.min.js"></script>
+  </body>
+</html>

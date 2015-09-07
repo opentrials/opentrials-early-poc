@@ -13,8 +13,8 @@ nunjucks.configure(views, {
 });
 
 app.get('/', function(request, response) {
-  response.render('base.html', {
-    title: 'Hello'
+  response.render('index.html', {
+    title: 'Hello, World!'
   });
 });
 
