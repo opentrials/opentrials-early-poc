@@ -12,10 +12,12 @@ nunjucks.configure(views, {
   express: app
 });
 
-app.get('/', function(request, response) {
-  response.render('index.html', {
-    title: 'Hello, World!'
-  });
-});
+var controllerIndex = require('./controllers/index');
+var controllerContacts = require('./controllers/contacts');
+var controllerAbout = require('./controllers/about');
+
+app.get('/', controllerIndex);
+app.get('/contacts', controllerContacts);
+app.get('/about', controllerAbout);
 
 module.exports = app;
