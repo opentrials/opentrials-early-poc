@@ -1,0 +1,18 @@
+<table class="table table-striped" cellpadding="0" cellspacing="0" border="0">
+<thead>
+  <tr>
+    <th>ID</th>
+    <th>Public Title</th>
+    <th>Scientific Title</th>
+  </tr>
+</thead>
+<tbody>
+  {% for trial in trials %}
+  <tr>
+    <td>{{ trial.id }}</td>
+    <td><a href="/trial/{{ trial.id }}">{{ trial.publicTitle }}</a></td>
+    <td><a href="/trial/{{ trial.id }}">{{ trial.scientificTitle }}</a></td>
+  </tr>
+  {% endfor %}
+</tbody>
+</table>
