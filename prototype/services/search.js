@@ -168,18 +168,21 @@ function performSearch(indexes, filters) {
   return ids;
 }
 
-function search(filters) {
+function search(filters, pagination) {
   var ids = performSearch(buildIndex(), filters);
-  var items = trialsModel.findAll();
   if (ids !== false) {
+    pagination.itemsCount = ids.length;
+    ids = ids.splice(
+      (pagination.currentPage - 1) * pagination.itemsPerPage,
+      pagination.currentPage * pagination.itemsPerPage
+    );
     var result = [];
-    for (var i = 0; i < items.length; i++) {
-      if (ids.indexOf(items[i].id) >= 0) {
-        result.push(items[i]);
-      }
+    for (var i = 0; i < ids.length; i++) {
+      result.push(trialsModel.findById(ids[i]));
     }
   } else {
-    result = items;
+    result = trialsModel.findAll();
+    pagination.itemsCount = result.length;
   }
   return result;
 }
