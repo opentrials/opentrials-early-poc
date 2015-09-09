@@ -19,6 +19,8 @@ Trial.prototype = {
   intervention: null, // text
   fundingSource: null, // char
   criteria: null, // text
+  year: null, // int
+  country: null, // char
   ageRange: null, // range of int
   sex: null, // enum(Male, Female, Both)
   targetSampleSize: null, // int
