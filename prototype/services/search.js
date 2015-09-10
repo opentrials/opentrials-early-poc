@@ -172,7 +172,7 @@ function search(filters, pagination) {
   var ids = performSearch(buildIndex(), filters);
   if (ids !== false) {
     pagination.itemsCount = ids.length;
-    ids = ids.splice(
+    ids = ids.slice(
       (pagination.currentPage - 1) * pagination.itemsPerPage,
       pagination.currentPage * pagination.itemsPerPage
     );
@@ -183,6 +183,10 @@ function search(filters, pagination) {
   } else {
     result = trialsModel.findAll();
     pagination.itemsCount = result.length;
+    result = result.slice(
+      (pagination.currentPage - 1) * pagination.itemsPerPage,
+      pagination.currentPage * pagination.itemsPerPage
+    );
   }
   return result;
 }
