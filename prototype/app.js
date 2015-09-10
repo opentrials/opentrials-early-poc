@@ -4,6 +4,7 @@ var app = express();
 var nunjucks  = require('nunjucks');
 var views = path.join(__dirname, '/views');
 var statics = path.join(__dirname, '/public');
+var routes = require('./routes/index');
 
 app.use(express.static(statics));
 
@@ -12,14 +13,6 @@ nunjucks.configure(views, {
   express: app
 });
 
-var controllerIndex = require('./controllers/index');
-var controllerContacts = require('./controllers/contacts');
-var controllerAbout = require('./controllers/about');
-var controllerTrial = require('./controllers/trial');
-
-app.get('/', controllerIndex);
-app.get('/contacts', controllerContacts);
-app.get('/about', controllerAbout);
-app.get('/trial/:id', controllerTrial);
+routes.configure(app);
 
 module.exports = app;
