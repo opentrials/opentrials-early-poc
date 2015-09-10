@@ -1,13 +1,25 @@
 var express = require('express');
 var path = require('path');
 var app = express();
+var nunjucks  = require('nunjucks');
 var views = path.join(__dirname, '/views');
 var statics = path.join(__dirname, '/public');
 
 app.use(express.static(statics));
 
-app.get('/', function(request, response) {
-  response.sendFile(path.join(views, '/base.html'));
+nunjucks.configure(views, {
+  autoescape: true,
+  express: app
 });
+
+var controllerIndex = require('./controllers/index');
+var controllerContacts = require('./controllers/contacts');
+var controllerAbout = require('./controllers/about');
+var controllerTrial = require('./controllers/trial');
+
+app.get('/', controllerIndex);
+app.get('/contacts', controllerContacts);
+app.get('/about', controllerAbout);
+app.get('/trial/:id', controllerTrial);
 
 module.exports = app;
