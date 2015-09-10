@@ -158,7 +158,8 @@ function distMockData() {
         var items = [];
         for (var i = 1; i <= count; i++) {
           items.push({
-            id: i
+            id: i,
+            age: faker.random.number({min: 3, max: 60})
           });
         }
         return items;
@@ -181,6 +182,8 @@ function distMockData() {
           scientificTitle: faker.lorem.sentence(2),
           condition: faker.random.number({min: 1, max: 20}), // One of 20 samples
           drug: faker.random.number({min: 1, max: 20}), // One of 20 samples
+          year: faker.random.number({min: 1990, max: 2015}),
+          country: faker.random.arrayElement(['USA', 'China', 'Russian Federation']),
           intervention: faker.lorem.paragraph(5),
           fundingSource: faker.company.companyName(),
           criteria: faker.lorem.paragraph(5),
@@ -200,7 +203,7 @@ function distMockData() {
   var data = {};
   for (var alias in generators) {
     if (generators.hasOwnProperty(alias)) {
-      data[alias] = generators[alias](20);
+      data[alias] = generators[alias](200);
     }
   }
 
@@ -220,6 +223,5 @@ gulp.task('default', [
   'app.styles',
   'vendor.scripts',
   'vendor.styles',
-  'vendor.fonts',
-  'app.models.mockData'
+  'vendor.fonts'
 ]);

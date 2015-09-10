@@ -55,11 +55,11 @@ describe('Core', function() {
   });
 
   it('Should contain ID of trial', function(done) {
-    var trialId = 1234;
+    var trialId = 10;
 
     browser.visit('/trial/' + trialId, function() {
       assert.ok(browser.success);
-      assert.equal(browser.text('h1'), 'Trial #' + trialId);
+      assert.include(browser.text('h1'), '#' + trialId);
       done();
     });
   });

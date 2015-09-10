@@ -8,7 +8,8 @@ function Participant(rawData) {
 }
 
 Participant.prototype = {
-  id: null // char, PK
+  id: null, // char, PK
+  age: null // int
 };
 
 var items = null;
