@@ -8,6 +8,6 @@ module.exports = function(request, response, next) {
   }
   response.render('trial.html', {
     title: 'Trial #' + request.params.id + ' ' + item.publicTitle + ' (' + item.scientificTitle + ')',
-    item: JSON.stringify(item)
+    item: item
   });
 };
