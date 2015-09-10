@@ -1,6 +1,13 @@
 {% extends "layouts/base.html" %}
 
 {% block content %}
-<p>Index page</p>
+{% include "partials/index-filters.html" %}
+{% if pagination.itemsCount > 0 %}
+<h2>Browse trials</h2>
+{% include "partials/pagination.html" %}
 {% include "partials/trials-list.html" %}
+{% include "partials/pagination.html" %}
+{% else %}
+<p><strong>Sorry, no results</strong></p>
+{% endif %}
 {% endblock %}

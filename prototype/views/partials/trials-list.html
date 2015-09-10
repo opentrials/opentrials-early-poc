@@ -1,18 +1,13 @@
-<table class="table table-striped" cellpadding="0" cellspacing="0" border="0">
-<thead>
-  <tr>
-    <th>ID</th>
-    <th>Public Title</th>
-    <th>Scientific Title</th>
-  </tr>
-</thead>
-<tbody>
-  {% for trial in trials %}
-  <tr>
-    <td>{{ trial.id }}</td>
-    <td><a href="/trial/{{ trial.id }}">{{ trial.publicTitle }}</a></td>
-    <td><a href="/trial/{{ trial.id }}">{{ trial.scientificTitle }}</a></td>
-  </tr>
-  {% endfor %}
-</tbody>
-</table>
+{% for trial in trials %}
+<div>
+  <div>
+    <h4><a href="/trial/{{ trial.id }}">{{ trial.publicTitle }} / {{ trial.scientificTitle }}</a></h4>
+  </div>
+  <div>
+    {{ trial.intervention }}
+  </div>
+  <div>
+    <a href="/trial/{{ trial.id }}"><i class="glyphicon glyphicon-eye-open margin-right-4"></i>View more</a>
+  </div>
+</div>
+{% endfor %}
