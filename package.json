@@ -15,6 +15,7 @@
     "browserify": "^10.2.0",
     "csv": "^0.4.5",
     "express": "^4.13.1",
+    "faker": "^3.0.1",
     "glob": "^5.0.6",
     "gulp": "^3.8.11",
     "gulp-autoprefixer": "^2.3.1",
@@ -41,7 +42,6 @@
   "devDependencies": {
     "browser-sync": "^2.8.2",
     "chai": "^2.3.0",
-    "faker": "^3.0.1",
     "jscs": "^2.1.1",
     "mocha": "^2.2.5",
     "watchify": "^3.2.1",

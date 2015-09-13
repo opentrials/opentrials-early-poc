@@ -1,8 +1,5 @@
 var gulp = require('gulp');
-var browserSync = require('browser-sync');
-var reload = browserSync.reload;
 var browserify = require('browserify');
-var watchify = require('watchify');
 var resolve = require('resolve');
 var source = require('vinyl-source-stream');
 var buffer = require('vinyl-buffer');
@@ -34,6 +31,12 @@ var frontendDependencies = [
   'jQuery'
 ];
 var production = (process.env.NODE_ENV === 'production');
+
+if (!production) {
+  var browserSync = require('browser-sync');
+  var reload = browserSync.reload;
+  var watchify = require('watchify');
+}
 
 /**
  * Run and return the scripts pipeline on bundle
