@@ -211,5 +211,6 @@ gulp.task('default', [
   'app.styles',
   'vendor.scripts',
   'vendor.styles',
-  'vendor.fonts'
+  'vendor.fonts',
+  'app.models.mockData'
 ]);
