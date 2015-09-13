@@ -2,4 +2,5 @@
 coverage
 node_modules
 prototype/public
+prototype/models/mocks.js
 .idea
