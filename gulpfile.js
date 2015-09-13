@@ -84,14 +84,12 @@ function distAppScripts() {
   }
   return scriptPipeline(bundler.bundle(), appJS)
            .pipe(reload({stream: true}));
-
 }
 
 /**
  * Provide frontend styles as a single bundle.
  */
 function distAppStyles() {
-
   return gulp
     .src(stylesDir + '/app.less')
     .pipe(sourcemaps.init())
@@ -101,33 +99,28 @@ function distAppStyles() {
     .pipe(minifyCss({compatibility: 'ie8'}))
     .pipe(rename(appCSS))
     .pipe(gulp.dest(publicStylesDir));
-
 }
 
 function distVendorStyles() {
-
   return gulp
     .src([
       nodeModulesDir + '/bootstrap/dist/css/bootstrap.min.css'
     ])
     .pipe(concat(vendorCSS))
     .pipe(gulp.dest(publicStylesDir));
-
 }
 
 function distVendorFonts() {
-
   return gulp
     .src([
       nodeModulesDir + '/bootstrap/dist/fonts/*'
     ])
     .pipe(gulp.dest(publicFontsDir));
-
 }
 
 function distMockData() {
   var generators = {
-    condition: function (count) {
+    condition: function(count) {
       var items = [];
       for (var i = 1; i <= count; i++) {
         items.push({
@@ -138,7 +131,7 @@ function distMockData() {
       }
       return items;
     },
-    drug: function (count) {
+    drug: function(count) {
       var items = [];
       for (var i = 1; i <= count; i++) {
         items.push({
@@ -149,7 +142,7 @@ function distMockData() {
       }
       return items;
     },
-    participant: function (count) {
+    participant: function(count) {
         var items = [];
         for (var i = 1; i <= count; i++) {
           items.push({
@@ -159,7 +152,7 @@ function distMockData() {
         }
         return items;
       },
-    review: function (count) {
+    review: function(count) {
       var items = [];
       for (var i = 1; i <= count; i++) {
         items.push({
@@ -168,7 +161,7 @@ function distMockData() {
       }
       return items;
     },
-    trial: function (count) {
+    trial: function(count) {
       var items = [];
       for (var i = 1; i <= count; i++) {
         items.push({
@@ -203,7 +196,7 @@ function distMockData() {
   }
 
   var str = 'module.exports = ' + JSON.stringify(data, null, 2) + ';\n';
-  return file('mocks.js', str, { src: true })
+  return file('mocks.js', str, {src: true})
     .pipe(gulp.dest(baseDir + '/models'));
 }
 
