@@ -33,6 +33,7 @@ var frontendDependencies = [
   'bootstrap',
   'jQuery'
 ];
+var production = (process.env.NODE_ENV === 'production');
 
 /**
  * Run and return the scripts pipeline on bundle
@@ -64,19 +65,16 @@ function distVendorScripts() {
  * Provide frontend app as a single bundle.
  */
 function distAppScripts() {
-
   var bundler = browserify({
     entries: [scriptsDir + '/app.js'],
-    debug: true,
+    debug: production,
     cache: {},
     packageCache: {},
     fullPaths: true
     // transform: [],
   });
-
   // Don't include vendor dependencies in this bundle
   bundler.external(frontendDependencies);
-
   if (process.env.WATCH === 'true') {
     bundler = watchify(bundler);
     bundler
