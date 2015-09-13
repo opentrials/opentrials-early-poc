@@ -56,7 +56,7 @@
     "jscs": "jscs prototype",
     "develop": "WATCH=true gulp & npm start",
     "start": "node prototype",
-    "postinstall": "npm build",
+    "postinstall": "npm run build",
     "test": "mocha tests --recursive --reporter spec"
   },
   "author": {
