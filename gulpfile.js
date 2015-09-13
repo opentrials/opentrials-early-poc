@@ -84,9 +84,10 @@ function distAppScripts() {
       .on('update', function() {
         scriptPipeline(bundler.bundle(), appJS);
       });
+    return scriptPipeline(bundler.bundle(), appJS)
+      .pipe(reload({stream: true}));
   }
-  return scriptPipeline(bundler.bundle(), appJS)
-           .pipe(reload({stream: true}));
+  return scriptPipeline(bundler.bundle(), appJS);
 }
 
 /**
