@@ -30,7 +30,8 @@ var appJS = 'app.min.js';
 var appCSS = 'app.min.css';
 var vendorCSS = 'vendor.min.css';
 var frontendDependencies = [
-  'bootstrap'
+  'bootstrap',
+  'jQuery'
 ];
 
 /**
@@ -52,15 +53,11 @@ function scriptPipeline(bundle, outfile) {
  * Provide frontend dependencies as a single bundle.
  */
 function distVendorScripts() {
-
-  return gulp
-    .src([
-      nodeModulesDir + '/jquery/dist/jquery.min.js',
-      nodeModulesDir + '/bootstrap/dist/js/bootstrap.min.js'
-    ])
-    .pipe(concat(vendorJS))
-    .pipe(gulp.dest(publicScriptsDir));
-
+  var bundler = browserify({});
+  frontendDependencies.forEach(function(id) {
+    bundler.require(resolve.sync(id), {expose: id});
+  });
+  return scriptPipeline(bundler.bundle(), vendorJS);
 }
 
 /**
