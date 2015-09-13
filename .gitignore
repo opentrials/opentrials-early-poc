@@ -1,5 +1,5 @@
 *.log
 coverage
 node_modules
-prototype/dist
+prototype/public
 .idea
