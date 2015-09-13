@@ -2,9 +2,11 @@
   "name": "opentrials-prototype",
   "private": true,
   "version": "0.0.1",
-  "description": "",
+  "description": "A prototype app for the Open Trials project.",
   "keywords": [
-    ""
+    "bad pharma",
+    "open data",
+    "open trials"
   ],
   "main": "prototype/index.js",
   "dependencies": {
@@ -51,11 +53,12 @@
     "npm": "v2.13.x"
   },
   "scripts": {
-    "start": "node prototype",
-    "test": "mocha tests --recursive --reporter spec",
     "build": "gulp",
     "jscs": "jscs prototype",
-    "develop": "WATCH=true gulp & npm start"
+    "develop": "WATCH=true gulp & npm start",
+    "start": "node prototype",
+    "postinstall": "npm build",
+    "test": "mocha tests --recursive --reporter spec"
   },
   "author": {
     "name": "Open Knowledge",
@@ -69,7 +72,7 @@
       "url": "http://pwalsh.me/"
     }
   ],
-  "homepage": "",
+  "homepage": "http://opentrials.net/",
   "bugs": "https://github.com/okfn/opentrials-prototype/issues",
   "repository": {
     "type": "git",
