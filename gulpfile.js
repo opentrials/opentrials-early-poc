@@ -18,13 +18,13 @@ var faker = require('faker');
 
 var baseDir = './prototype';
 var nodeModulesDir = baseDir + '/../node_modules';
-var srcDir = baseDir + '/ui';
+var uiDir = baseDir + '/ui';
 var publicDir = baseDir + '/public';
 var publicStylesDir = publicDir + '/styles';
 var publicScriptsDir = publicDir + '/scripts';
 var publicFontsDir = publicDir + '/fonts';
-var stylesDir = srcDir + '/styles';
-var scriptsDir = srcDir + '/scripts';
+var stylesDir = uiDir + '/styles';
+var scriptsDir = uiDir + '/scripts';
 var vendorJS = 'vendor.min.js';
 var appJS = 'app.min.js';
 var appCSS = 'app.min.css';
