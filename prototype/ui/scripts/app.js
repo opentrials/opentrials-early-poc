@@ -1,5 +1,5 @@
-var jQuery = require('jQuery');
+var $ = require('jquery');
 
-jQuery(function () {
-  jQuery('[data-toggle="tooltip"]').tooltip();
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip();
 });

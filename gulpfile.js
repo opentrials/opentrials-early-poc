@@ -28,7 +28,7 @@ var appCSS = 'app.min.css';
 var vendorCSS = 'vendor.min.css';
 var frontendDependencies = [
   'bootstrap',
-  'jquery'
+  'jQuery'
 ];
 var production = (process.env.NODE_ENV === 'production');
 
