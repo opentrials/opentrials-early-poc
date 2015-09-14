@@ -1,5 +1,6 @@
 *.log
 coverage
 node_modules
-prototype/dist
+prototype/public
+prototype/models/mocks.js
 .idea

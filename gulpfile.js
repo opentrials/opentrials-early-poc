@@ -1,8 +1,5 @@
 var gulp = require('gulp');
-var browserSync = require('browser-sync');
-var reload = browserSync.reload;
 var browserify = require('browserify');
-var watchify = require('watchify');
 var resolve = require('resolve');
 var source = require('vinyl-source-stream');
 var buffer = require('vinyl-buffer');
@@ -18,20 +15,28 @@ var faker = require('faker');
 
 var baseDir = './prototype';
 var nodeModulesDir = baseDir + '/../node_modules';
-var srcDir = baseDir + '/ui';
+var uiDir = baseDir + '/ui';
 var publicDir = baseDir + '/public';
 var publicStylesDir = publicDir + '/styles';
 var publicScriptsDir = publicDir + '/scripts';
 var publicFontsDir = publicDir + '/fonts';
-var stylesDir = srcDir + '/styles';
-var scriptsDir = srcDir + '/scripts';
+var stylesDir = uiDir + '/styles';
+var scriptsDir = uiDir + '/scripts';
 var vendorJS = 'vendor.min.js';
 var appJS = 'app.min.js';
 var appCSS = 'app.min.css';
 var vendorCSS = 'vendor.min.css';
 var frontendDependencies = [
-  'bootstrap'
+  'bootstrap',
+  'jquery'
 ];
+var production = (process.env.NODE_ENV === 'production');
+
+if (!production) {
+  var browserSync = require('browser-sync');
+  var reload = browserSync.reload;
+  var watchify = require('watchify');
+}
 
 /**
  * Run and return the scripts pipeline on bundle
@@ -52,51 +57,43 @@ function scriptPipeline(bundle, outfile) {
  * Provide frontend dependencies as a single bundle.
  */
 function distVendorScripts() {
-
-  return gulp
-    .src([
-      nodeModulesDir + '/jquery/dist/jquery.min.js',
-      nodeModulesDir + '/bootstrap/dist/js/bootstrap.min.js'
-    ])
-    .pipe(concat(vendorJS))
-    .pipe(gulp.dest(publicScriptsDir));
-
+  var bundler = browserify({});
+  frontendDependencies.forEach(function(id) {
+    bundler.require(resolve.sync(id), {expose: id});
+  });
+  return scriptPipeline(bundler.bundle(), vendorJS);
 }
 
 /**
  * Provide frontend app as a single bundle.
  */
 function distAppScripts() {
-
   var bundler = browserify({
     entries: [scriptsDir + '/app.js'],
-    debug: true,
+    debug: production,
     cache: {},
     packageCache: {},
     fullPaths: true
     // transform: [],
   });
-
   // Don't include vendor dependencies in this bundle
   bundler.external(frontendDependencies);
-
   if (process.env.WATCH === 'true') {
     bundler = watchify(bundler);
     bundler
       .on('update', function() {
         scriptPipeline(bundler.bundle(), appJS);
       });
+    return scriptPipeline(bundler.bundle(), appJS)
+      .pipe(reload({stream: true}));
   }
-  return scriptPipeline(bundler.bundle(), appJS)
-           .pipe(reload({stream: true}));
-
+  return scriptPipeline(bundler.bundle(), appJS);
 }
 
 /**
  * Provide frontend styles as a single bundle.
  */
 function distAppStyles() {
-
   return gulp
     .src(stylesDir + '/app.less')
     .pipe(sourcemaps.init())
@@ -106,33 +103,28 @@ function distAppStyles() {
     .pipe(minifyCss({compatibility: 'ie8'}))
     .pipe(rename(appCSS))
     .pipe(gulp.dest(publicStylesDir));
-
 }
 
 function distVendorStyles() {
-
   return gulp
     .src([
       nodeModulesDir + '/bootstrap/dist/css/bootstrap.min.css'
     ])
     .pipe(concat(vendorCSS))
     .pipe(gulp.dest(publicStylesDir));
-
 }
 
 function distVendorFonts() {
-
   return gulp
     .src([
       nodeModulesDir + '/bootstrap/dist/fonts/*'
     ])
     .pipe(gulp.dest(publicFontsDir));
-
 }
 
 function distMockData() {
   var generators = {
-    condition: function (count) {
+    condition: function(count) {
       var items = [];
       for (var i = 1; i <= count; i++) {
         items.push({
@@ -143,7 +135,7 @@ function distMockData() {
       }
       return items;
     },
-    drug: function (count) {
+    drug: function(count) {
       var items = [];
       for (var i = 1; i <= count; i++) {
         items.push({
@@ -154,7 +146,7 @@ function distMockData() {
       }
       return items;
     },
-    participant: function (count) {
+    participant: function(count) {
         var items = [];
         for (var i = 1; i <= count; i++) {
           items.push({
@@ -164,7 +156,7 @@ function distMockData() {
         }
         return items;
       },
-    review: function (count) {
+    review: function(count) {
       var items = [];
       for (var i = 1; i <= count; i++) {
         items.push({
@@ -173,7 +165,7 @@ function distMockData() {
       }
       return items;
     },
-    trial: function (count) {
+    trial: function(count) {
       var items = [];
       for (var i = 1; i <= count; i++) {
         items.push({
@@ -208,7 +200,7 @@ function distMockData() {
   }
 
   var str = 'module.exports = ' + JSON.stringify(data, null, 2) + ';\n';
-  return file('mocks.js', str, { src: true })
+  return file('mocks.js', str, {src: true})
     .pipe(gulp.dest(baseDir + '/models'));
 }
 
@@ -223,5 +215,6 @@ gulp.task('default', [
   'app.styles',
   'vendor.scripts',
   'vendor.styles',
-  'vendor.fonts'
+  'vendor.fonts',
+  'app.models.mockData'
 ]);

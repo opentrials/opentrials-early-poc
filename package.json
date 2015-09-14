@@ -2,47 +2,48 @@
   "name": "opentrials-prototype",
   "private": true,
   "version": "0.0.1",
-  "description": "",
+  "description": "A prototype app for the Open Trials project.",
   "keywords": [
-    ""
+    "bad pharma",
+    "open data",
+    "open trials"
   ],
   "main": "prototype/index.js",
   "dependencies": {
     "bluebird": "^2.9.31",
     "bootstrap": "^3.3.5",
+    "browserify": "^10.2.0",
     "csv": "^0.4.5",
     "express": "^4.13.1",
-    "glob": "^5.0.6",
-    "gulp-concat": "^2.6.0",
-    "gulp-file": "^0.2.0",
-    "gulp-insert": "^0.5.0",
-    "jquery": "^2.1.4",
-    "lodash": "^3.10.1",
-    "lunr": "^0.5.12",
-    "nunjucks": "^2.0.0",
-    "superagent": "^1.3.0",
-    "superagent-bluebird-promise": "^2.0.2"
-  },
-  "devDependencies": {
-    "browser-sync": "^2.8.2",
-    "browserify": "^10.2.0",
-    "chai": "^2.3.0",
     "faker": "^3.0.1",
+    "glob": "^5.0.6",
     "gulp": "^3.8.11",
     "gulp-autoprefixer": "^2.3.1",
     "gulp-concat": "^2.5.2",
+    "gulp-file": "^0.2.0",
+    "gulp-insert": "^0.5.0",
     "gulp-less": "^3.0.3",
     "gulp-minify-css": "^1.1.1",
     "gulp-rename": "^1.2.2",
     "gulp-sourcemaps": "^1.5.2",
     "gulp-uglify": "^1.2.0",
-    "jscs": "^2.1.1",
-    "mocha": "^2.2.5",
+    "jquery": "^2.1.4",
+    "lodash": "^3.10.1",
+    "lunr": "^0.5.12",
+    "nunjucks": "^2.0.0",
     "resolve": "^1.1.6",
+    "superagent": "^1.3.0",
+    "superagent-bluebird-promise": "^2.0.2",
     "streamqueue": "^1.1.0",
     "uglify-js": "^2.4.21",
     "vinyl-buffer": "^1.0.0",
-    "vinyl-source-stream": "^1.1.0",
+    "vinyl-source-stream": "^1.1.0"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.8.2",
+    "chai": "^2.3.0",
+    "jscs": "^2.1.1",
+    "mocha": "^2.2.5",
     "watchify": "^3.2.1",
     "zombie": "^4.1.0"
   },
@@ -51,11 +52,12 @@
     "npm": "v2.13.x"
   },
   "scripts": {
-    "start": "node prototype",
-    "test": "mocha tests --recursive --reporter spec",
     "build": "gulp",
     "jscs": "jscs prototype",
-    "develop": "WATCH=true gulp & npm start"
+    "develop": "WATCH=true gulp & npm start",
+    "start": "node prototype",
+    "postinstall": "npm run build",
+    "test": "mocha tests --recursive --reporter spec"
   },
   "author": {
     "name": "Open Knowledge",
@@ -69,7 +71,7 @@
       "url": "http://pwalsh.me/"
     }
   ],
-  "homepage": "",
+  "homepage": "http://opentrials.net/",
   "bugs": "https://github.com/okfn/opentrials-prototype/issues",
   "repository": {
     "type": "git",
