@@ -12,7 +12,8 @@ module.exports = function(request, response) {
   var items = searchService.search(filterParams.apply ? filterParams : {}, pagination);
 
   response.render('index.html', {
-    title: 'Main',
+    title: 'Find a trial',
+    subtitle: 'Proin mattis non neque vitae dapibus',
     filterParams: filterParams,
     pagination: pagination,
     getUrlForPage: function(page) {

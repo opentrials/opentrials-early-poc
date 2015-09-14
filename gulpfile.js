@@ -19,9 +19,11 @@ var uiDir = baseDir + '/ui';
 var publicDir = baseDir + '/public';
 var publicStylesDir = publicDir + '/styles';
 var publicScriptsDir = publicDir + '/scripts';
+var publicImagesDir = publicDir + '/images';
 var publicFontsDir = publicDir + '/fonts';
 var stylesDir = uiDir + '/styles';
 var scriptsDir = uiDir + '/scripts';
+var imagesDir = uiDir + '/images';
 var vendorJS = 'vendor.min.js';
 var appJS = 'app.min.js';
 var appCSS = 'app.min.css';
@@ -103,6 +105,18 @@ function distAppStyles() {
     .pipe(minifyCss({compatibility: 'ie8'}))
     .pipe(rename(appCSS))
     .pipe(gulp.dest(publicStylesDir));
+}
+
+function distAppImages() {
+  return gulp
+    .src(imagesDir + '/*')
+    .pipe(gulp.dest(publicImagesDir));
+}
+
+function distAppIcon() {
+  return gulp
+    .src(imagesDir + '/favicon.png')
+    .pipe(gulp.dest(publicDir));
 }
 
 function distVendorStyles() {
@@ -206,6 +220,8 @@ function distMockData() {
 
 gulp.task('app.scripts', distAppScripts);
 gulp.task('app.styles', distAppStyles);
+gulp.task('app.images', distAppImages);
+gulp.task('app.favicon', distAppIcon);
 gulp.task('vendor.scripts', distVendorScripts);
 gulp.task('vendor.styles', distVendorStyles);
 gulp.task('vendor.fonts', distVendorFonts);
@@ -213,6 +229,8 @@ gulp.task('app.models.mockData', distMockData);
 gulp.task('default', [
   'app.scripts',
   'app.styles',
+  'app.images',
+  'app.favicon',
   'vendor.scripts',
   'vendor.styles',
   'vendor.fonts',
