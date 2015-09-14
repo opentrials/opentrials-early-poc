@@ -7,7 +7,8 @@ module.exports = function(request, response, next) {
     return next();
   }
   response.render('trial.html', {
-    title: 'Trial #' + request.params.id + ' ' + item.publicTitle + ' (' + item.scientificTitle + ')',
+    title: 'Trial #' + request.params.id + ' ' + item.publicTitle,
+    subtitle: item.scientificTitle,
     item: item
   });
 };
