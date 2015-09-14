@@ -15,6 +15,9 @@
 
   <link rel="stylesheet" type="text/css" href="/styles/vendor.min.css" />
   <link rel="stylesheet" type="text/css" href="/styles/app.min.css" />
+
+  <link rel="shortcut icon" type="image/png" href="/favicon.png">
+  <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
 </head>
 
 <body>
@@ -22,10 +25,10 @@
 {% include "partials/header.html"  %}
 {% include "partials/navigation.html"  %}
 
-<div class="jumbotron inverse">
+<div class="jumbotron inverse ot-header-jumbotron">
   <div class="container">
     {% block title %}<h1>{{ title }}</h1>{% endblock %}
-    <p>Introductory sentence or tagline.</p>
+    {% block subtitle %}<p>{{ subtitle }}</p>{% endblock %}
   </div>
 </div>
 
