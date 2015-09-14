@@ -23,13 +23,6 @@ describe('Core', function() {
     });
   });
 
-  it('is alive', function(done) {
-    browser.visit('/', function() {
-      browser.assert.success();
-      done();
-    });
-  });
-
   it('Should contain text "Main"', function(done) {
     browser.visit('/', function() {
       assert.ok(browser.success);
