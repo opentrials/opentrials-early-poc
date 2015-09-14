@@ -12,7 +12,8 @@ function trialsList(request, response) {
     itemsPerPage: request.query.ipp
   });
   var filterParams = request.query.filter || {};
-  var items = searchService.search(filterParams.apply ? filterParams : {}, pagination);
+  filterParams = filterParams.apply ? filterParams : {};
+  var items = searchService.search(filterParams, pagination);
 
   response.render('index.html', {
     title: 'Find a trial',
