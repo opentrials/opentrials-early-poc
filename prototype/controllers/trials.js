@@ -1,8 +1,11 @@
+var express = require('express');
+
 var searchService = require('../services/search');
 var paginationService = require('../services/pagination');
 var url = require('url');
+var trialModel = require('../models/trial');
 
-module.exports = function(request, response) {
+function trialsList(request, response) {
   var requestUrl = url.parse(request.url, true);
   var pagination = paginationService.create({
     currentPage: request.query.page,
@@ -27,4 +30,23 @@ module.exports = function(request, response) {
     },
     trials: items
   });
-};
+}
+
+function trialDetails(request, response, next) {
+  var item = trialModel.findById(request.params.id);
+  if (!item) {
+    // Continue processing request
+    return next();
+  }
+  response.render('trial.html', {
+    title: 'Trial #' + request.params.id + ' ' + item.publicTitle,
+    subtitle: item.scientificTitle,
+    item: item
+  });
+}
+
+var router = express.Router();
+router.get('/', trialsList);
+router.get('/trial/:id', trialDetails);
+
+module.exports = router;
