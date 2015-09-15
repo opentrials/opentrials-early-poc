@@ -5,7 +5,7 @@ var trialsModel = require('../models/trial');
 var index = null;
 
 function toInt(value) {
-  value = + value;
+  value = +value;
   return isFinite(value) ? value : false;
 }
 
@@ -105,7 +105,8 @@ function buildIndex() {
       index.phrase.add({
         id: trial.id,
         title: trial.publicTitle + ' / ' + trial.scientificTitle,
-        condition: condition ? condition.technicalName + ' / ' + condition.commonName : '',
+        condition: condition ? condition.technicalName + ' / ' +
+          condition.commonName : '',
         drug: drug ? drug.technicalName + ' / ' + drug.commonName : '',
         country: trial.country
       });
@@ -122,7 +123,8 @@ function buildIndex() {
 
       index.condition.add({
         id: trial.id,
-        condition: condition ? condition.technicalName + ' / ' + condition.commonName : ''
+        condition: condition ? condition.technicalName + ' / ' +
+          condition.commonName : ''
       });
 
       index.year.add({
@@ -150,7 +152,8 @@ function performSearchByIndex(index, phrase) {
 
 function performSearch(indexes, filters) {
   var result = [];
-  var ids, phrase;
+  var ids;
+  var phrase;
   for (var name in indexes) {
     if (indexes.hasOwnProperty(name) && filters.hasOwnProperty(name)) {
       phrase = filters[name];

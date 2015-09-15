@@ -1,21 +1,11 @@
-var controllerIndex = require('../controllers/index');
-var controllerContacts = require('../controllers/contacts');
-var controllerAbout = require('../controllers/about');
-var controllerTrial = require('../controllers/trial');
+var express = require('express');
+var path = require('path');
+var statics = path.join(__dirname, '/../public');
 
-var notfoundHandler = require('../controllers/notfound');
-var errorHandler = require('../controllers/error');
+var router = express.Router();
+router.use(express.static(statics));
+router.use(require('../controllers/trials'));
+router.use(require('../controllers/pages'));
+router.use(require('../controllers/errors'));
 
-function configure(app) {
-  app.get('/', controllerIndex);
-  app.get('/contacts', controllerContacts);
-  app.get('/about', controllerAbout);
-  app.get('/trial/:id', controllerTrial);
-
-  // Handle 404 error
-  app.use(notfoundHandler);
-  // Handle other errors and show HTTP 500
-  app.use(errorHandler);
-}
-
-module.exports.configure = configure;
+module.exports = router;

@@ -2,7 +2,7 @@ var assign = require('lodash/object/assign');
 var lang = require('lodash/lang');
 
 function toInt(value) {
-  value = + ('' + value);
+  value = +('' + value);
   return isFinite(value) ? value : false;
 }
 
