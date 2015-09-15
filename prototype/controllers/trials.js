@@ -5,7 +5,11 @@ var paginationService = require('../services/pagination');
 var url = require('url');
 var trialModel = require('../models/trial');
 
-function trialsList(request, response) {
+function trialsList(request, response, next) {
+  if (request.query.page < 1) {
+    return next();
+  }
+
   var requestUrl = url.parse(request.url, true);
   var pagination = paginationService.create({
     currentPage: request.query.page,
@@ -14,6 +18,10 @@ function trialsList(request, response) {
   var filterParams = request.query.filter || {};
   filterParams = filterParams.apply ? filterParams : {};
   var items = searchService.search(filterParams, pagination);
+
+  if (request.query.page > pagination.pageCount) {
+    return next();
+  }
 
   response.render('index.html', {
     title: 'Find a trial',
