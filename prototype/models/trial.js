@@ -1,53 +1,125 @@
-var assign = require('lodash/object/assign');
-var find = require('lodash/collection/find');
-var mocks = require('./mocks');
-
-var conditionModel = require('./condition');
-var drugModel = require('./drug');
-
-function Trial(rawData) {
-  // Extend newly created object based on raw data
-  assign(this, rawData);
-}
-
-Trial.prototype = {
-  id: null, // char, PK
-  publicTitle: null, // char
-  scientificTitle: null, // char
-  condition: null, // char, FK
-  drug: null, // char, FK
-  intervention: null, // text
-  fundingSource: null, // char
-  criteria: null, // text
-  year: null, // int
-  country: null, // char
-  ageRange: null, // range of int
-  sex: null, // enum(Male, Female, Both)
-  targetSampleSize: null, // int
-  actualSampleSize: null // int
-};
-
-var items = null;
-
-function findAll() {
-  if (items === null) {
-    items = [];
-    var records = mocks.trial;
-    for (var i = 0; i < records.length; i++) {
-      var record = records[i];
-      record.condition = conditionModel.findById(record.condition);
-      record.drug = drugModel.findById(record.drug);
-      items.push(new Trial(record));
+module.exports = function(sequelize, DataTypes) {
+  var Trial = sequelize.define('Trial', {
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true
+    },
+    source_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true
+    },
+    public_title: {
+      type: DataTypes.TEXT,
+      allowNull: true
+    },
+    scientific_title: {
+      type: DataTypes.TEXT,
+      allowNull: true
+    },
+    condition_or_problem: {
+      type: DataTypes.TEXT,
+      allowNull: true
+    },
+    source_of_funding: {
+      type: DataTypes.TEXT,
+      allowNull: true
+    },
+    countries: {
+      type: DataTypes.TEXT,
+      allowNull: true
+    },
+    contacts: {
+      type: DataTypes.TEXT,
+      allowNull: true
+    },
+    date_from: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+    date_to: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+    notes: {
+      type: DataTypes.TEXT,
+      allowNull: true
+    },
+    central_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true
+    },
+    central_status: {
+      type: DataTypes.TEXT,
+      allowNull: true
+    },
+    central_date: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+    exclusion_criteria: {
+      type: DataTypes.TEXT,
+      allowNull: true
+    },
+    sample_size: {
+      type: DataTypes.TEXT,
+      allowNull: true
+    },
+    age_from: {
+      type: DataTypes.INTEGER,
+      allowNull: true
+    },
+    age_to: {
+      type: DataTypes.INTEGER,
+      allowNull: true
+    },
+    sex: {
+      type: DataTypes.ARRAY(DataTypes.ENUM('Male', 'Female')),
+      allowNull: true
+    },
+    interventions: {
+      type: DataTypes.ARRAY(DataTypes.TEXT),
+      allowNull: true
+    },
+    outcomes: {
+      type: DataTypes.ARRAY(DataTypes.TEXT),
+      allowNull: true
     }
-  }
-  return items;
-}
-
-function findById(id) {
-  return find(findAll(), function(item) {
-    return item.id == id;
+  }, {
+    tableName: 'trial',
+    classMethods: {
+      associate: function (models) {
+        Trial.belongsTo(models.Source, {
+          as: 'Source',
+          foreignKey: 'source_id'
+        });
+        Trial.belongsToMany(models.Condition, {
+          through: models.Trial2Condition,
+          as: 'Conditions',
+          foreignKey: 'trial_id'
+        });
+        Trial.belongsToMany(models.Document, {
+          through: models.Trial2Document,
+          as: 'Documents',
+          foreignKey: 'trial_id'
+        });
+        Trial.belongsToMany(models.Drug, {
+          through: models.Trial2Drug,
+          as: 'Drugs',
+          foreignKey: 'trial_id'
+        });
+        Trial.belongsToMany(models.Method, {
+          through: models.Trial2Method,
+          as: 'Methods',
+          foreignKey: 'trial_id'
+        });
+        Trial.belongsToMany(models.Review, {
+          through: models.Trial2Review,
+          as: 'Reviews',
+          foreignKey: 'trial_id'
+        });
+      }
+    }
   });
-}
 
-module.exports.findAll = findAll;
-module.exports.findById = findById;
+  return Trial;
+};

@@ -1,33 +1,38 @@
 module.exports = function(sequelize, DataTypes) {
-  var Condition = sequelize.define('Condition', {
+  var Document = sequelize.define('Document', {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true
     },
-    meddra: {
+    tag: {
       type: DataTypes.TEXT,
       allowNull: true
     },
-    who_icd_10: {
+    type: {
       type: DataTypes.TEXT,
       allowNull: true
     },
-    description: {
-      type: DataTypes.TEXT,
+    contents: {
+      type: 'BYTEA',
       allowNull: true
     }
   }, {
-    tableName: 'condition',
+    tableName: 'document',
     classMethods: {
       associate: function (models) {
-        Condition.belongsToMany(models.Trial, {
+        Document.belongsToMany(models.Trial, {
           through: models.Trial2Condition,
           as: 'Trials',
-          foreignKey: 'condition_id'
+          foreignKey: 'document_id'
+        });
+        Document.belongsToMany(models.Review, {
+          through: models.Review2Document,
+          as: 'Reviews',
+          foreignKey: 'document_id'
         });
       }
     }
   });
 
-  return Condition;
+  return Document;
 };

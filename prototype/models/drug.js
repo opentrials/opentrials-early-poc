@@ -1,36 +1,41 @@
-var assign = require('lodash/object/assign');
-var find = require('lodash/collection/find');
-var mocks = require('./mocks');
-
-function Drug(rawData) {
-  // Extend newly created object based on raw data
-  assign(this, rawData);
-}
-
-Drug.prototype = {
-  id: null, // char, PK
-  technicalName: null, // char
-  commonName: null // char
-};
-
-var items = null;
-
-function findAll() {
-  if (items === null) {
-    items = [];
-    var records = mocks.drug;
-    for (var i = 0; i < records.length; i++) {
-      items.push(new Drug(records[i]));
+module.exports = function(sequelize, DataTypes) {
+  var Drug = sequelize.define('Drug', {
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true
+    },
+    technical_name: {
+      type: DataTypes.TEXT,
+      allowNull: true
+    },
+    trade_name: {
+      type: DataTypes.TEXT,
+      allowNull: true
+    },
+    who_dde: {
+      type: DataTypes.TEXT,
+      allowNull: true
+    },
+    category: {
+      type: DataTypes.TEXT,
+      allowNull: true
+    },
+    description: {
+      type: DataTypes.TEXT,
+      allowNull: true
     }
-  }
-  return items;
-}
-
-function findById(id) {
-  return find(findAll(), function(item) {
-    return item.id == id;
+  }, {
+    tableName: 'drug',
+    classMethods: {
+      associate: function (models) {
+        Drug.belongsToMany(models.Trial, {
+          through: models.Trial2Condition,
+          as: 'Trials',
+          foreignKey: 'drug_id'
+        });
+      }
+    }
   });
-}
 
-module.exports.findAll = findAll;
-module.exports.findById = findById;
+  return Drug;
+};

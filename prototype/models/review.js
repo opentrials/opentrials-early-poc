@@ -1,34 +1,94 @@
-var assign = require('lodash/object/assign');
-var find = require('lodash/collection/find');
-var mocks = require('./mocks');
-
-function Review(rawData) {
-  // Extend newly created object based on raw data
-  assign(this, rawData);
-}
-
-Review.prototype = {
-  id: null // char, PK
-};
-
-var items = null;
-
-function findAll() {
-  if (items === null) {
-    items = [];
-    var records = mocks.review;
-    for (var i = 0; i < records.length; i++) {
-      items.push(new Review(records[i]));
+module.exports = function(sequelize, DataTypes) {
+  var Review = sequelize.define('Review', {
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true
+    },
+    type: {
+      type: DataTypes.TEXT,
+      allowNull: true
+    },
+    link: {
+      type: DataTypes.TEXT,
+      allowNull: true
+    },
+    title: {
+      type: DataTypes.TEXT,
+      allowNull: true
+    },
+    notes: {
+      type: DataTypes.TEXT,
+      allowNull: true
+    },
+    contacts: {
+      type: DataTypes.TEXT,
+      allowNull: true
+    },
+    abstract: {
+      type: DataTypes.TEXT,
+      allowNull: true
+    },
+    language: {
+      type: DataTypes.TEXT,
+      allowNull: true
+    },
+    central_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true
+    },
+    central_status: {
+      type: DataTypes.TEXT,
+      allowNull: true
+    },
+    central_date: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+    authors: {
+      type: DataTypes.TEXT,
+      allowNull: true
+    },
+    publisher: {
+      type: DataTypes.TEXT,
+      allowNull: true
+    },
+    journal: {
+      type: DataTypes.TEXT,
+      allowNull: true
+    },
+    year: {
+      type: DataTypes.TEXT,
+      allowNull: true
+    },
+    volume: {
+      type: DataTypes.TEXT,
+      allowNull: true
+    },
+    issue: {
+      type: DataTypes.TEXT,
+      allowNull: true
+    },
+    pages: {
+      type: DataTypes.TEXT,
+      allowNull: true
     }
-  }
-  return items;
-}
-
-function findById(id) {
-  return find(findAll(), function(item) {
-    return item.id == id;
+  }, {
+    tableName: 'review',
+    classMethods: {
+      associate: function (models) {
+        Review.belongsToMany(models.Trial, {
+          through: models.Trial2Condition,
+          as: 'Trials',
+          foreignKey: 'review_id'
+        });
+        Review.belongsToMany(models.Document, {
+          through: models.Review2Document,
+          as: 'Documents',
+          foreignKey: 'review_id'
+        });
+      }
+    }
   });
-}
 
-module.exports.findAll = findAll;
-module.exports.findById = findById;
+  return Review;
+};
