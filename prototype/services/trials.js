@@ -17,5 +17,23 @@ module.exports.getItems = function(query) {
 };
 
 module.exports.getItem = function(id) {
-  return models.Trial.findById(id);
+  return new Promise(function(resolve, reject) {
+    models.Trial.findById(id).then(function(item) {
+      var promises = [];
+
+      // Load associated data
+      promises.push(item.getConditions());
+      promises.push(item.getDocuments());
+      promises.push(item.getDrugs());
+
+      // Wait for all data ready
+      when.all(promises).then(function(results){
+        item.conditions = results[0];
+        item.documents = results[1];
+        item.drugs = results[2];
+        console.log(item.dateFrom, item.dateTo);
+        resolve(item);
+      });
+    }).catch(reject);
+  });
 };

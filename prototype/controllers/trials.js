@@ -1,6 +1,5 @@
 var express = require('express');
 
-var searchService = require('../services/search');
 var paginationService = require('../services/pagination');
 var url = require('url');
 var trialsService = require('../services/trials');
@@ -59,7 +58,7 @@ function trialDetails(request, response, next) {
     response.render('trial.html', {
       title: 'Trial #' + request.params.id + ' ' + item.publicTitle,
       subtitle: item.scientificTitle,
-      item: item
+      trial: item
     });
   }).catch(function() {
     return next();

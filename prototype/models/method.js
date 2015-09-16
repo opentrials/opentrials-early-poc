@@ -13,7 +13,7 @@ module.exports = function(sequelize, DataTypes) {
     classMethods: {
       associate: function (models) {
         Method.belongsToMany(models.Trial, {
-          through: models.Trial2Condition,
+          through: models.Trial2Method,
           as: 'Trials',
           foreignKey: 'method_id'
         });

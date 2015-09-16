@@ -4,12 +4,14 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.INTEGER,
       primaryKey: true
     },
-    technical_name: {
+    technicalName: {
       type: DataTypes.TEXT,
+      field: 'technical_name',
       allowNull: true
     },
-    trade_name: {
+    tradeName: {
       type: DataTypes.TEXT,
+      field: 'trade_name',
       allowNull: true
     },
     who_dde: {
@@ -29,7 +31,7 @@ module.exports = function(sequelize, DataTypes) {
     classMethods: {
       associate: function (models) {
         Drug.belongsToMany(models.Trial, {
-          through: models.Trial2Condition,
+          through: models.Trial2Drug,
           as: 'Trials',
           foreignKey: 'drug_id'
         });

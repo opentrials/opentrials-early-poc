@@ -21,7 +21,7 @@ module.exports = function(sequelize, DataTypes) {
     classMethods: {
       associate: function (models) {
         Document.belongsToMany(models.Trial, {
-          through: models.Trial2Condition,
+          through: models.Trial2Document,
           as: 'Trials',
           foreignKey: 'document_id'
         });

@@ -8,20 +8,24 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.INTEGER,
       allowNull: true
     },
-    public_title: {
+    publicTitle: {
       type: DataTypes.TEXT,
+      field: 'public_title',
       allowNull: true
     },
-    scientific_title: {
+    scientificTitle: {
       type: DataTypes.TEXT,
+      field: 'scientific_title',
       allowNull: true
     },
-    condition_or_problem: {
+    conditionOrProblem: {
       type: DataTypes.TEXT,
+      field: 'condition_or_problem',
       allowNull: true
     },
-    source_of_funding: {
+    sourceOfFunding: {
       type: DataTypes.TEXT,
+      field: 'source_of_funding',
       allowNull: true
     },
     countries: {
@@ -32,12 +36,14 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.TEXT,
       allowNull: true
     },
-    date_from: {
+    dateFrom: {
       type: DataTypes.DATE,
+      field: 'date_from',
       allowNull: true
     },
-    date_to: {
+    dateTo: {
       type: DataTypes.DATE,
+      field: 'date_to',
       allowNull: true
     },
     notes: {
@@ -56,20 +62,24 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.DATE,
       allowNull: true
     },
-    exclusion_criteria: {
+    exclusionCriteria: {
       type: DataTypes.TEXT,
+      field: 'exclusion_criteria',
       allowNull: true
     },
-    sample_size: {
+    sampleSize: {
       type: DataTypes.TEXT,
+      field: 'sample_size',
       allowNull: true
     },
-    age_from: {
+    ageFrom: {
       type: DataTypes.INTEGER,
+      field: 'age_from',
       allowNull: true
     },
-    age_to: {
+    ageTo: {
       type: DataTypes.INTEGER,
+      field: 'age_to',
       allowNull: true
     },
     sex: {

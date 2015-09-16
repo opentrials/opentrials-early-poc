@@ -4,10 +4,14 @@
     <h4><a href="/trial/{{ trial.id }}">{{ trial.publicTitle }} / {{ trial.scientificTitle }}</a></h4>
   </div>
   <div>
-    {{ trial.intervention }}
+    {% set comma = joiner(', ') %}
+    {% for s in trial.interventions %}
+      {{ comma() }}{{ s }}
+    {% endfor %}
   </div>
   <div>
     <a href="/trial/{{ trial.id }}"><i class="glyphicon glyphicon-eye-open margin-right-4"></i>View more</a>
   </div>
+  {% if not loop.last %}<hr>{% endif %}
 </div>
 {% endfor %}
