@@ -41,7 +41,8 @@
     "uglify-js": "^2.4.21",
     "umzug": "^1.6.0",
     "vinyl-buffer": "^1.0.0",
-    "vinyl-source-stream": "^1.1.0"
+    "vinyl-source-stream": "^1.1.0",
+    "when": "^3.7.3"
   },
   "devDependencies": {
     "browser-sync": "^2.8.2",
