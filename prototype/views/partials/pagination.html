@@ -2,11 +2,33 @@
   <ul class="pagination">
     {% if pagination.currentPage == 1 %}
     <li class="disabled"><a href="javascript:void(0)">&laquo;</a></li>
+    <li class="disabled"><a href="javascript:void(0)">&lsaquo;</a></li>
     {% else %}
-    <li><a href="{{ getUrlForPage(pagination.currentPage - 1) }}">&laquo;</a></li>
+    <li><a href="{{ getUrlForPage(1) }}">&laquo;</a></li>
+    <li><a href="{{ getUrlForPage(pagination.currentPage - 1) }}">&lsaquo;</a></li>
     {% endif %}
 
-    {% for page in range(1, pagination.pageCount + 1) %}
+    {% set halfCountOfVisiblePage = 4 %}
+
+    {% set firstVisiblePage = pagination.currentPage - halfCountOfVisiblePage %}
+    {% set lastVisiblePage = pagination.currentPage + halfCountOfVisiblePage %}
+
+    {% if firstVisiblePage < 1 %}
+      {% set lastVisiblePage = lastVisiblePage - firstVisiblePage + 1 %}
+      {% set firstVisiblePage = 1 %}
+    {% endif %}
+
+    {% if lastVisiblePage > pagination.pageCount %}
+      {% set firstVisiblePage = firstVisiblePage - (lastVisiblePage - pagination.pageCount) %}
+      {% if firstVisiblePage < 1 %}{% set firstVisiblePage = 1 %}{% endif %}
+      {% set lastVisiblePage = pagination.pageCount %}
+    {% endif %}
+
+    {% if firstVisiblePage > 1 %}
+    <li class="disabled"><span>&hellip;</span></li>
+    {% endif %}
+
+    {% for page in range(firstVisiblePage, lastVisiblePage + 1) %}
       {% if page == pagination.currentPage %}
       <li class="active"><a href="javascript:void(0)">{{ page }}</a></li>
       {% else %}
@@ -14,10 +36,16 @@
       {% endif %}
     {% endfor %}
 
+    {% if lastVisiblePage < pagination.pageCount %}
+    <li class="disabled"><span>&hellip;</span></li>
+    {% endif %}
+
     {% if pagination.currentPage == pagination.pageCount %}
+    <li class="disabled"><a href="javascript:void(0)">&rsaquo;</a></li>
     <li class="disabled"><a href="javascript:void(0)">&raquo;</a></li>
     {% else %}
-    <li><a href="{{ getUrlForPage(pagination.currentPage + 1) }}">&raquo;</a></li>
+    <li><a href="{{ getUrlForPage(pagination.currentPage + 1) }}">&rsaquo;</a></li>
+    <li><a href="{{ getUrlForPage(pagination.pageCount) }}">&raquo;</a></li>
     {% endif %}
   </ul>
 </nav>
