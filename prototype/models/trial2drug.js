@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = function(sequelize, DataTypes) {
   var Trial2Drug = sequelize.define('Trial2Drug', {
     trialId: {

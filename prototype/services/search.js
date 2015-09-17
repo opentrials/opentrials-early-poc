@@ -1,3 +1,5 @@
+'use strict';
+
 var Promise = require('bluebird');
 var lunr = require('lunr');
 var models = require('../models');
@@ -7,9 +9,9 @@ var index = null;
 function getIndex() {
   return new Promise(function(resolve, reject) {
     if (index === null) {
-      index = lunr(function () {
+      index = lunr(function() {
         this.field('title');
-        this.ref('id')
+        this.ref('id');
       });
       models.Trial.findAll().then(function(items) {
         for (var i = 0; i < items.length; i++) {

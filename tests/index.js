@@ -1,3 +1,5 @@
+'use strict';
+
 var Browser = require('zombie');
 var app = require('../prototype/app');
 var assert = require('chai').assert;
@@ -68,7 +70,7 @@ describe('Pages', function() {
 describe('Search', function() {
   var browser = new Browser({maxWait: 5000});
   // Ensure we have time for request to resolve, etc.
-  this.timeout(2000);
+  this.timeout(20000);
 
   it('Should return results without search', function (done) {
     browser.visit('/', function () {

@@ -1,3 +1,5 @@
+'use strict';
+
 var _ = require('lodash');
 var Promise = require('bluebird');
 var fs = require('fs');
@@ -17,6 +19,8 @@ var sequelize = new Sequelize('postgres', 'postgres', 'root', {
     max: 5,
     min: 0,
     idle: 10000
+  },
+  logging: function(str) {
   },
   define: {
     timestamps: false

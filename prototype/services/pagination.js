@@ -1,3 +1,5 @@
+'use strict';
+
 var lodash = require('lodash');
 var assign = require('lodash/object/assign');
 var lang = require('lodash/lang');

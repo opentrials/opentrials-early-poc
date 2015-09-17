@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = function(sequelize, DataTypes) {
   var Review2Document = sequelize.define('Review2Document', {
     reviewId: {

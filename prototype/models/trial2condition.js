@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = function(sequelize, DataTypes) {
   var Trial2Condition = sequelize.define('Trial2Condition', {
     trialId: {

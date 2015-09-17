@@ -1,3 +1,5 @@
+'use strict';
+
 var lodash = require('lodash');
 var when = require('when');
 var Promise = require('bluebird');

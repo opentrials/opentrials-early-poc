@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = function(sequelize, DataTypes) {
   var Trial2Method = sequelize.define('Trial2Method', {
     trialId: {
