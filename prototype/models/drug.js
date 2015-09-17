@@ -16,6 +16,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     whoDde: {
       type: DataTypes.TEXT,
+      field: 'who_dde',
       allowNull: true
     },
     category: {

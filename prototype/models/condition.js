@@ -10,6 +10,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     whoIcd10: {
       type: DataTypes.TEXT,
+      field: 'who_icd_10',
       allowNull: true
     },
     description: {
