@@ -5,7 +5,8 @@ var path = require('path');
 var Sequelize = require('sequelize');
 var Umzug = require('umzug');
 var basename = path.basename(module.filename);
-var migrationsDir = path.join(path.dirname(path.dirname(module.filename)), 'migrations');
+var migrationsDir = path.join(path.dirname(path.dirname(module.filename)),
+  'migrations');
 var umzug;
 var db = {};
 
@@ -36,16 +37,16 @@ umzug = new Umzug({
 
 fs
   .readdirSync(__dirname)
-  .filter(function (file) {
+  .filter(function(file) {
     return (file.indexOf('.') !== 0) && (file.slice(-1) !== '~') &&
       (file !== basename);
   })
-  .forEach(function (file) {
+  .forEach(function(file) {
     var model = sequelize.import(path.join(__dirname, file));
     db[model.name] = model;
   });
 
-Object.keys(db).forEach(function (modelName) {
+Object.keys(db).forEach(function(modelName) {
   if ('associate' in db[modelName]) {
     db[modelName].associate(db);
   }

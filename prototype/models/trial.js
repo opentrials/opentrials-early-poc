@@ -4,8 +4,9 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.INTEGER,
       primaryKey: true
     },
-    source_id: {
+    sourceId: {
       type: DataTypes.INTEGER,
+      field: 'source_id',
       allowNull: true
     },
     publicTitle: {
@@ -100,7 +101,7 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     tableName: 'trial',
     classMethods: {
-      associate: function (models) {
+      associate: function(models) {
         Trial.belongsTo(models.Source, {
           as: 'Source',
           foreignKey: 'source_id'

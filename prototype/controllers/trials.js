@@ -13,10 +13,10 @@ function trialsList(request, response, next) {
 
   // Initialize filter values
   var filterParams = request.query.filter || {};
-  filterParams = filterParams.apply ? filterParams : {};
+  filterParams = filterParams.apply ? filterParams : null;
 
   // Get items and render page
-  trialsService.getItems(pagination).then(function(items) {
+  trialsService.getItems(pagination, filterParams).then(function(items) {
     response.render('index.html', {
       title: 'Find a trial',
       subtitle: 'Proin mattis non neque vitae dapibus',
@@ -24,7 +24,7 @@ function trialsList(request, response, next) {
       trials: items,
       pagination: pagination
     });
-  }).catch(function(){
+  }).catch(function() {
     return next();
   });
 }

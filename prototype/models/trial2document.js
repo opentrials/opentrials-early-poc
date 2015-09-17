@@ -1,11 +1,13 @@
 module.exports = function(sequelize, DataTypes) {
   var Trial2Document = sequelize.define('Trial2Document', {
-    trial_id: {
+    trialId: {
       type: DataTypes.INTEGER,
+      field: 'trial_id',
       allowNull: false
     },
-    document_id: {
+    documentId: {
       type: DataTypes.INTEGER,
+      field: 'document_id',
       allowNull: false
     }
   }, {

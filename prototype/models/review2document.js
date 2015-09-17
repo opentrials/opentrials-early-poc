@@ -1,11 +1,13 @@
 module.exports = function(sequelize, DataTypes) {
   var Review2Document = sequelize.define('Review2Document', {
-    review_id: {
+    reviewId: {
       type: DataTypes.INTEGER,
+      field: 'review_id',
       allowNull: false
     },
-    document_id: {
+    documentId: {
       type: DataTypes.INTEGER,
+      field: 'document_id',
       allowNull: false
     }
   }, {

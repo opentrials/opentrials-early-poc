@@ -14,7 +14,7 @@ module.exports = function(sequelize, DataTypes) {
       field: 'trade_name',
       allowNull: true
     },
-    who_dde: {
+    whoDde: {
       type: DataTypes.TEXT,
       allowNull: true
     },
@@ -29,7 +29,7 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     tableName: 'drug',
     classMethods: {
-      associate: function (models) {
+      associate: function(models) {
         Drug.belongsToMany(models.Trial, {
           through: models.Trial2Drug,
           as: 'Trials',

@@ -19,7 +19,7 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     tableName: 'document',
     classMethods: {
-      associate: function (models) {
+      associate: function(models) {
         Document.belongsToMany(models.Trial, {
           through: models.Trial2Document,
           as: 'Trials',

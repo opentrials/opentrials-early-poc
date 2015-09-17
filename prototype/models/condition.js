@@ -8,7 +8,7 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.TEXT,
       allowNull: true
     },
-    who_icd_10: {
+    whoIcd10: {
       type: DataTypes.TEXT,
       allowNull: true
     },
@@ -19,7 +19,7 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     tableName: 'condition',
     classMethods: {
-      associate: function (models) {
+      associate: function(models) {
         Condition.belongsToMany(models.Trial, {
           through: models.Trial2Condition,
           as: 'Trials',
