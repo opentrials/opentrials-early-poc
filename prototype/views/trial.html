@@ -2,13 +2,17 @@
 
 {% block content %}
 
+{% set notAvailable = 'N/A' %}
+
 <section class="row">
   <h2 class="col-xs-12">Overview</h2>
 
   <div class="col-xs-12 margin-bottom-10">
     <div class="pull-left margin-right-30">
-      Condition: <strong>{{ trial.conditionOrProblem }}
-      ({{ trial.condition.technicalName }})</strong>
+      Condition: <strong>{{ trial.conditionOrProblem }}</strong>
+      {% if trial.condition.technicalName %}
+      <strong>({{ trial.condition.technicalName }})</strong>
+      {% endif %}
     </div>
   </div>
 
@@ -26,7 +30,12 @@
   <div class="col-xs-12 margin-bottom-10">
     <div class="pull-left margin-right-30">
       <i class="glyphicon glyphicon-calendar margin-right-4"></i>
-      {{ trial.dateFrom }}-{{ trial.dateFrom }}
+      {% if trial.dateFrom or trial.dateTo %}
+        {{ trial.dateFrom if trial.dateFrom else notAvailable }} -
+        {{ trial.dateTo if trial.dateTo else notAvailable }}
+      {% else %}
+        {{ notAvailable }}
+      {% endif %}
     </div>
 
     <div class="pull-left margin-right-30">
@@ -40,13 +49,19 @@
     </div>
 
     <div class="pull-left">
-      Aged {{ trial.ageFrom }}-{{ trial.ageTo }}
+      <span>Aged</span>
+      {% if trial.ageFrom or trial.ageTo %}
+        {{ trial.ageFrom if trial.ageFrom else notAvailable }} -
+        {{ trial.ageTo if trial.ageTo else notAvailable }}
+      {% else %}
+        {{ notAvailable }}
+      {% endif %}
     </div>
   </div>
 </section>
 
 <section class="row">
-  <h2 class="col-xs-12">Associated documents</h2>
+  <h2 class="col-xs-12">Associated documents (stub)</h2>
   <div class="col-xs-12">
     <div class="pull-left margin-right-30">
       <div>
@@ -102,14 +117,14 @@
 <section class="col-sm-9">
 
   <section class="row">
-    <h2 class="col-xs-12">Patient information</h2>
+    <h2 class="col-xs-12">Patient information (stub)</h2>
     <div class="col-xs-12">
       {{ trial.intervention }}
     </div>
   </section>
 
   <section class="row">
-    <h2 class="col-xs-12">Individual patient data</h2>
+    <h2 class="col-xs-12">Individual patient data (stub)</h2>
     <div class="col-xs-12">
       <p>
         Maecenas quis nisi velit. Cras quis porttitor quam. Nunc feugiat eros id
@@ -122,7 +137,7 @@
   </section>
 
   <section class="row">
-    <h2 class="col-xs-12">Help us to improve this data</h2>
+    <h2 class="col-xs-12">Help us to improve this data (stub)</h2>
     <ul class="col-xs-12">
       <li>
         Donec tempor eros euismod eros malesuada, id ullamcorper odio euismod.

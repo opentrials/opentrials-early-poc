@@ -32,16 +32,19 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.TEXT,
       allowNull: true
     },
-    central_id: {
+    centralId: {
       type: DataTypes.INTEGER,
+      field: 'central_id',
       allowNull: true
     },
-    central_status: {
+    centralStatus: {
       type: DataTypes.TEXT,
+      field: 'central_status',
       allowNull: true
     },
-    central_date: {
+    centralDate: {
       type: DataTypes.DATE,
+      field: 'central_date',
       allowNull: true
     },
     authors: {

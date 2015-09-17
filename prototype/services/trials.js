@@ -2,16 +2,26 @@ var when = require('when');
 var Promise = require('bluebird');
 var models = require('../models');
 
-module.exports.getItems = function(query) {
+module.exports.getItems = function(pagination) {
   return new Promise(function(resolve, reject) {
-    var promises = [];
-    promises.push(models.Trial.findAll(query));
-    promises.push(models.Trial.count());
-    when.all(promises).then(function(results) {
-      resolve({
-        items: results[0],
-        count: results[1]
-      });
+    if (pagination.currentPage < 1) {
+      return reject();
+    }
+    models.Trial.count().then(function(itemsCount){
+      pagination.itemsCount = itemsCount;
+      if (pagination.currentPageValue > pagination.pageCount) {
+        return reject();
+      }
+
+      models.Trial.findAll({
+        order: [
+          ['public_title', 'ASC'],
+          ['scientific_title', 'ASC'],
+          ['id', 'ASC']
+        ],
+        offset: (pagination.currentPage - 1) * pagination.itemsPerPage,
+        limit: pagination.itemsPerPage
+      }).then(resolve).catch(reject);
     }).catch(reject);
   });
 };
@@ -19,6 +29,10 @@ module.exports.getItems = function(query) {
 module.exports.getItem = function(id) {
   return new Promise(function(resolve, reject) {
     models.Trial.findById(id).then(function(item) {
+      if (!item) {
+        return reject();
+      }
+
       var promises = [];
 
       // Load associated data
@@ -31,7 +45,6 @@ module.exports.getItem = function(id) {
         item.conditions = results[0];
         item.documents = results[1];
         item.drugs = results[2];
-        console.log(item.dateFrom, item.dateTo);
         resolve(item);
       });
     }).catch(reject);
