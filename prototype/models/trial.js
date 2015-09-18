@@ -1,5 +1,7 @@
 'use strict';
 
+var lodash = require('lodash');
+
 module.exports = function(sequelize, DataTypes) {
   var Trial = sequelize.define('Trial', {
     id: {
@@ -90,7 +92,20 @@ module.exports = function(sequelize, DataTypes) {
     },
     sex: {
       type: DataTypes.ARRAY(DataTypes.ENUM('Male', 'Female')),
-      allowNull: true
+      allowNull: true,
+      get: function() {
+        var value = this.getDataValue('sex');
+        if (!lodash.isArray(value)) {
+          value = lodash.filter(
+            value.substr(1, value.length - 2).split(','),
+            function(item) {
+              return item.length > 0;
+            }
+          );
+          this.setDataValue('sex', value);
+        }
+        return value;
+      }
     },
     interventions: {
       type: DataTypes.ARRAY(DataTypes.TEXT),

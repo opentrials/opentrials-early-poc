@@ -9,10 +9,7 @@
     </a></h4>
   </div>
   <div>
-    {% set comma = joiner(', ') %}
-    {% for s in trial.interventions %}
-      {{ comma() }}{{ s }}
-    {% endfor %}
+    {{ trial.conditionOrProblem }}
   </div>
   <div>
     <a href="/trial/{{ trial.id }}"><i class="glyphicon glyphicon-eye-open margin-right-4"></i>View more</a>

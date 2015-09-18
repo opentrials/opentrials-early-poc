@@ -45,7 +45,11 @@
     {% set joinAnd = joiner(' and ') %}
     <div class="pull-left margin-right-30">
       <i class="glyphicon glyphicon-user margin-right-4"></i>
-      {% for sex in trial.sex %}{{ joinAnd() }}{{ sex }}{% endfor %}
+      {% if trial.sex.length > 0 %}
+        {% for sex in trial.sex %}{{ joinAnd() }}{{ sex }}{% endfor %}
+      {% else %}
+        {{ notAvailable }}
+      {% endif %}
     </div>
 
     <div class="pull-left">
