@@ -12,20 +12,14 @@ var migrationsDir = path.join(path.dirname(path.dirname(module.filename)),
 var umzug;
 var db = {};
 
-var sequelize = new Sequelize('postgres', 'postgres', 'root', {
-  host: 'localhost',
-  dialect: 'postgres',
-  pool: {
-    max: 5,
-    min: 0,
-    idle: 10000
-  },
-  logging: function(str) {
-  },
-  define: {
-    timestamps: false
-  }
-});
+var dbConfig = require('../config').get('database');
+dbConfig.logging = function(str) {};
+dbConfig.define = {
+  timestamps: false
+};
+
+var sequelize = new Sequelize(dbConfig.database, dbConfig.username,
+  dbConfig.password, dbConfig);
 
 umzug = new Umzug({
   storage: 'sequelize',
