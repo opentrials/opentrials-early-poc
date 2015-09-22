@@ -1,56 +1,45 @@
+'use strict';
+
 var express = require('express');
 
-var searchService = require('../services/search');
 var paginationService = require('../services/pagination');
-var url = require('url');
-var trialModel = require('../models/trial');
+var trialsService = require('../services/trials');
 
 function trialsList(request, response, next) {
-  if (request.query.page < 1) {
-    return next();
-  }
-
-  var requestUrl = url.parse(request.url, true);
+  // Initialize pagination
   var pagination = paginationService.create({
     currentPage: request.query.page,
-    itemsPerPage: request.query.ipp
+    itemsPerPage: request.query.ipp,
+    baseUrl: request.url
   });
+
+  // Initialize filter values
   var filterParams = request.query.filter || {};
-  filterParams = filterParams.apply ? filterParams : {};
-  var items = searchService.search(filterParams, pagination);
+  filterParams = filterParams.apply ? filterParams : null;
 
-  if (request.query.page > pagination.pageCount) {
+  // Get items and render page
+  trialsService.getItems(pagination, filterParams).then(function(items) {
+    response.render('index.html', {
+      title: 'Find a trial',
+      subtitle: 'Proin mattis non neque vitae dapibus',
+      filterParams: filterParams,
+      trials: items,
+      pagination: pagination
+    });
+  }).catch(function() {
     return next();
-  }
-
-  response.render('index.html', {
-    title: 'Find a trial',
-    subtitle: 'Proin mattis non neque vitae dapibus',
-    filterParams: filterParams,
-    pagination: pagination,
-    getUrlForPage: function(page) {
-      if (page > 1) {
-        requestUrl.query.page = page;
-      } else {
-        delete requestUrl.query.page;
-      }
-      delete requestUrl.search;
-      return url.format(requestUrl);
-    },
-    trials: items
   });
 }
 
 function trialDetails(request, response, next) {
-  var item = trialModel.findById(request.params.id);
-  if (!item) {
-    // Continue processing request
+  trialsService.getItem(request.params.id).then(function(item) {
+    response.render('trial.html', {
+      title: 'Trial #' + request.params.id + ' ' + item.publicTitle,
+      subtitle: item.scientificTitle,
+      trial: item
+    });
+  }).catch(function() {
     return next();
-  }
-  response.render('trial.html', {
-    title: 'Trial #' + request.params.id + ' ' + item.publicTitle,
-    subtitle: item.scientificTitle,
-    item: item
   });
 }
 

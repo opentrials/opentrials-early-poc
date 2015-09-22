@@ -1,13 +1,19 @@
 {% for trial in trials %}
 <div class="search-results-item">
   <div>
-    <h4><a href="/trial/{{ trial.id }}">{{ trial.publicTitle }} / {{ trial.scientificTitle }}</a></h4>
+    <h4><a href="/trial/{{ trial.id }}">
+      {{ trial.publicTitle }}
+      {% if (trial.scientificTitle) %}
+        ({{ trial.scientificTitle }})
+      {% endif %}
+    </a></h4>
   </div>
   <div>
-    {{ trial.intervention }}
+    {{ trial.conditionOrProblem }}
   </div>
   <div>
     <a href="/trial/{{ trial.id }}"><i class="glyphicon glyphicon-eye-open margin-right-4"></i>View more</a>
   </div>
+  {% if not loop.last %}<hr>{% endif %}
 </div>
 {% endfor %}

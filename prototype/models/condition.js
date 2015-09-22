@@ -1,36 +1,36 @@
-var assign = require('lodash/object/assign');
-var find = require('lodash/collection/find');
-var mocks = require('./mocks');
+'use strict';
 
-function Condition(rawData) {
-  // Extend newly created object based on raw data
-  assign(this, rawData);
-}
-
-Condition.prototype = {
-  id: null, // char, PK
-  technicalName: null, // char
-  commonName: null // char
-};
-
-var items = null;
-
-function findAll() {
-  if (items === null) {
-    items = [];
-    var records = mocks.condition;
-    for (var i = 0; i < records.length; i++) {
-      items.push(new Condition(records[i]));
+module.exports = function(sequelize, DataTypes) {
+  var Condition = sequelize.define('Condition', {
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true
+    },
+    meddra: {
+      type: DataTypes.TEXT,
+      allowNull: true
+    },
+    whoIcd10: {
+      type: DataTypes.TEXT,
+      field: 'who_icd_10',
+      allowNull: true
+    },
+    description: {
+      type: DataTypes.TEXT,
+      allowNull: true
     }
-  }
-  return items;
-}
-
-function findById(id) {
-  return find(findAll(), function(item) {
-    return item.id == id;
+  }, {
+    tableName: 'condition',
+    classMethods: {
+      associate: function(models) {
+        Condition.belongsToMany(models.Trial, {
+          through: models.Trial2Condition,
+          as: 'Trials',
+          foreignKey: 'condition_id'
+        });
+      }
+    }
   });
-}
 
-module.exports.findAll = findAll;
-module.exports.findById = findById;
+  return Condition;
+};

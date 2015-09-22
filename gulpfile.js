@@ -136,88 +136,6 @@ function distVendorFonts() {
     .pipe(gulp.dest(publicFontsDir));
 }
 
-function distMockData() {
-  var generators = {
-    condition: function(count) {
-      var items = [];
-      for (var i = 1; i <= count; i++) {
-        items.push({
-          id: i,
-          technicalName: faker.lorem.sentence(2),
-          commonName: faker.commerce.productName()
-        });
-      }
-      return items;
-    },
-    drug: function(count) {
-      var items = [];
-      for (var i = 1; i <= count; i++) {
-        items.push({
-          id: i,
-          technicalName: faker.lorem.sentence(2),
-          commonName: faker.commerce.productName()
-        });
-      }
-      return items;
-    },
-    participant: function(count) {
-        var items = [];
-        for (var i = 1; i <= count; i++) {
-          items.push({
-            id: i,
-            age: faker.random.number({min: 3, max: 60})
-          });
-        }
-        return items;
-      },
-    review: function(count) {
-      var items = [];
-      for (var i = 1; i <= count; i++) {
-        items.push({
-          id: i
-        });
-      }
-      return items;
-    },
-    trial: function(count) {
-      var items = [];
-      for (var i = 1; i <= count; i++) {
-        items.push({
-          id: i,
-          publicTitle: faker.commerce.productName(),
-          scientificTitle: faker.lorem.sentence(2),
-          condition: faker.random.number({min: 1, max: 20}), // One of 20 samples
-          drug: faker.random.number({min: 1, max: 20}), // One of 20 samples
-          year: faker.random.number({min: 1990, max: 2015}),
-          country: faker.random.arrayElement(['USA', 'China', 'Russian Federation']),
-          intervention: faker.lorem.paragraph(5),
-          fundingSource: faker.company.companyName(),
-          criteria: faker.lorem.paragraph(5),
-          ageRange: [
-            faker.random.number({min: 3, max: 18}),
-            faker.random.number({min: 20, max: 60})
-          ],
-          sex: faker.random.arrayElement(['Male', 'Female', 'Both']),
-          targetSampleSize: faker.random.number({min: 1000, max: 9999}),
-          actualSampleSize: faker.random.number({min: 1000, max: 9999})
-        });
-      }
-      return items;
-    }
-  };
-
-  var data = {};
-  for (var alias in generators) {
-    if (generators.hasOwnProperty(alias)) {
-      data[alias] = generators[alias](200);
-    }
-  }
-
-  var str = 'module.exports = ' + JSON.stringify(data, null, 2) + ';\n';
-  return file('mocks.js', str, {src: true})
-    .pipe(gulp.dest(baseDir + '/models'));
-}
-
 gulp.task('app.scripts', distAppScripts);
 gulp.task('app.styles', distAppStyles);
 gulp.task('app.images', distAppImages);
@@ -225,7 +143,6 @@ gulp.task('app.favicon', distAppIcon);
 gulp.task('vendor.scripts', distVendorScripts);
 gulp.task('vendor.styles', distVendorStyles);
 gulp.task('vendor.fonts', distVendorFonts);
-gulp.task('app.models.mockData', distMockData);
 gulp.task('default', [
   'app.scripts',
   'app.styles',
@@ -233,6 +150,5 @@ gulp.task('default', [
   'app.favicon',
   'vendor.scripts',
   'vendor.styles',
-  'vendor.fonts',
-  'app.models.mockData'
+  'vendor.fonts'
 ]);

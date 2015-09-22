@@ -1,3 +1,5 @@
+'use strict';
+
 var express = require('express');
 
 function pageAbout(request, response) {
