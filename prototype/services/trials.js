@@ -1,7 +1,6 @@
 'use strict';
 
 var lodash = require('lodash');
-var when = require('when');
 var Promise = require('bluebird');
 var searchService = require('./search');
 var models = require('../models');
@@ -14,12 +13,17 @@ function getItems(pagination, idsOrFilterParams) {
 
     // If second parameter is set of filters, resolve them into trials IDs
     var searchPromise = null;
-    if (lodash.isObject(idsOrFilterParams)) {
-      searchPromise = searchService.searchTrials(idsOrFilterParams);
-    } else {
+    var isListOfIDs = lodash.isArray(idsOrFilterParams) ||
+      lodash.isNull(idsOrFilterParams) ||
+      lodash.isUndefined(idsOrFilterParams) ||
+      lodash.isFinite(idsOrFilterParams) ||
+      lodash.isString(idsOrFilterParams);
+    if (isListOfIDs) {
       searchPromise = new Promise(function(resolve) {
         resolve(idsOrFilterParams);
       });
+    } else {
+      searchPromise = searchService.searchTrials(idsOrFilterParams);
     }
 
     // Query trials using IDs (if any)
@@ -78,7 +82,7 @@ function getItem(id) {
       promises.push(item.getDrugs());
 
       // Wait for all data ready
-      when.all(promises).then(function(results) {
+      Promise.all(promises).then(function(results) {
         item.conditions = results[0];
         item.documents = results[1];
         item.drugs = results[2];

@@ -7,8 +7,7 @@ var path = require('path');
 var Sequelize = require('sequelize');
 var Umzug = require('umzug');
 var basename = path.basename(module.filename);
-var migrationsDir = path.join(path.dirname(path.dirname(module.filename)),
-  'migrations');
+var migrationsDir = path.join(module.filename, '/../../migrations');
 var umzug;
 var db = {};
 
