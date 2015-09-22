@@ -5,14 +5,11 @@ var config = require('../config');
 module.exports = function(request, response, next) {
   if (config.get('access:isProtected')) {
     var accessToken = config.get('access:token');
-    if (request.cookies.token !== accessToken) {
+    if (request.session.token !== accessToken) {
       var hasErrors = false;
       if (request.method == 'POST') {
         if (request.body && (request.body.token === accessToken)) {
-          response.cookie('token', accessToken, {
-            expires: new Date(Date.now() + 24 * 60 * 60 * 1000), // 24 hours
-            httpOnly: true
-          });
+          request.session.token = accessToken;
           response.redirect(request.url);
           return;
         } else {

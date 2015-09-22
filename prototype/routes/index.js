@@ -2,25 +2,32 @@
 
 var express = require('express');
 var path = require('path');
+var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
+var session = require('cookie-session');
 var statics = path.join(__dirname, '/../public');
+var config = require('../config');
 
 var router = express.Router();
 router.use(express.static(statics));
 
 // Some express middleware to prepare request
-router.use(require('cookie-parser')());
-router.use(require('body-parser').urlencoded({extended: true}));
+router.use([
+  cookieParser(),
+  session(config.get('session')),
+  bodyParser.urlencoded({extended: true}),
 
-// Middleware for restricting access to app
-router.use(require('../middlewares/access-token'));
+  // Middleware for restricting access to app
+  require('../middlewares/access-token'),
 
-// Controllers
-router.use(require('../controllers/trials'));
-router.use(require('../controllers/pages'));
+  // Controllers
+  require('../controllers/trials'),
+  require('../controllers/pages'),
 
-// 404 Page
-router.use(require('../middlewares/not-found'));
-// Error handler
-router.use(require('../middlewares/errors'));
+  // 404 Page
+  require('../middlewares/not-found'),
+  // Error handler
+  require('../middlewares/errors')
+]);
 
 module.exports = router;
