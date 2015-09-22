@@ -24,6 +24,10 @@ nconf.defaults({
       timestamps: true
     }
   },
+  access: {
+    isProtected: process.env.IS_PROTECTED || false,
+    token: process.env.ACCESS_TOKEN || null
+  },
   appconfig: {
     port: process.env.PORT || 3000
   }
