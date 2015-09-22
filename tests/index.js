@@ -18,7 +18,7 @@ before(function(done) {
 describe('Core', function() {
   var browser = new Browser({maxWait: 5000});
   // Ensure we have time for request to resolve, etc.
-  this.timeout(2000);
+  this.timeout(10000);
 
   it('Should be alive', function (done) {
     browser.visit('/', function() {

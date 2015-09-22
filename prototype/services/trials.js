@@ -13,12 +13,17 @@ function getItems(pagination, idsOrFilterParams) {
 
     // If second parameter is set of filters, resolve them into trials IDs
     var searchPromise = null;
-    if (lodash.isObject(idsOrFilterParams)) {
-      searchPromise = searchService.searchTrials(idsOrFilterParams);
-    } else {
+    var isListOfIDs = lodash.isArray(idsOrFilterParams) ||
+      lodash.isNull(idsOrFilterParams) ||
+      lodash.isUndefined(idsOrFilterParams) ||
+      lodash.isFinite(idsOrFilterParams) ||
+      lodash.isString(idsOrFilterParams);
+    if (isListOfIDs) {
       searchPromise = new Promise(function(resolve) {
         resolve(idsOrFilterParams);
       });
+    } else {
+      searchPromise = searchService.searchTrials(idsOrFilterParams);
     }
 
     // Query trials using IDs (if any)
