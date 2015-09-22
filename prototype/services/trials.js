@@ -1,7 +1,6 @@
 'use strict';
 
 var lodash = require('lodash');
-var when = require('when');
 var Promise = require('bluebird');
 var searchService = require('./search');
 var models = require('../models');
@@ -78,7 +77,7 @@ function getItem(id) {
       promises.push(item.getDrugs());
 
       // Wait for all data ready
-      when.all(promises).then(function(results) {
+      Promise.all(promises).then(function(results) {
         item.conditions = results[0];
         item.documents = results[1];
         item.drugs = results[2];
