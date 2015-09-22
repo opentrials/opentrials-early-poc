@@ -19,14 +19,14 @@ nconf.defaults({
     dialect: process.env.DB_DIALECT || 'postgres',
     logging: false,
     define: {
-      charset: "utf-8",
-      collate: "utf8_general_ci",
+      charset: 'utf-8',
+      collate: 'utf8_general_ci',
       timestamps: true
     }
   },
   session: {
     name: 'NSESSID',
-    secret: "REPLACE WITH YOUR OWN SECRET",
+    secret: 'REPLACE WITH YOUR OWN SECRET',
     maxAge: 24 * 60 * 60 * 1000 // 24 hours
   },
   access: {
