@@ -7,7 +7,7 @@ nconf.file({
   file: path.join(__dirname, '/../settings.json')
 });
 
-// this is the object that you want to override in your own local config
+// This is the object that you want to override in your own local config
 nconf.defaults({
   env: process.env.NODE_ENV || 'development',
   database: {
@@ -19,10 +19,19 @@ nconf.defaults({
     dialect: process.env.DB_DIALECT || 'postgres',
     logging: false,
     define: {
-      charset: "utf-8",
-      collate: "utf8_general_ci",
+      charset: 'utf-8',
+      collate: 'utf8_general_ci',
       timestamps: true
     }
+  },
+  session: {
+    name: 'NSESSID',
+    secret: 'REPLACE WITH YOUR OWN SECRET',
+    maxAge: 24 * 60 * 60 * 1000 // 24 hours
+  },
+  access: {
+    isProtected: process.env.IS_PROTECTED || false,
+    token: process.env.ACCESS_TOKEN || null
   },
   appconfig: {
     port: process.env.PORT || 3000
