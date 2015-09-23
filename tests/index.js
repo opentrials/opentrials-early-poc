@@ -1,11 +1,14 @@
 'use strict';
 
+// Set this before initializing config
+process.env.NODE_ENV = 'test';
+
 var Browser = require('zombie');
 var app = require('../prototype/app');
+var config = require('../prototype/config');
 var assert = require('chai').assert;
 var lodash = require('lodash');
 
-process.env.NODE_ENV = 'test';
 Browser.localhost('127.0.0.1', process.env.PORT || 3000);
 
 before(function(done) {
@@ -15,17 +18,51 @@ before(function(done) {
   });
 });
 
+beforeEach(function() {
+  // Disable protection by access token
+  config.set('access:isProtected', false);
+  config.set('access:token', '123');
+});
+
 describe('Core', function() {
   var browser = new Browser({maxWait: 5000});
   // Ensure we have time for request to resolve, etc.
   this.timeout(10000);
 
-  it('Should be alive', function (done) {
+  it('Should be alive', function(done) {
     browser.visit('/', function() {
       assert.ok(browser.success);
       done();
     });
   });
+});
+
+
+describe('Access Token', function() {
+  var browser = new Browser({maxWait: 5000});
+  // Ensure we have time for request to resolve, etc.
+  this.timeout(2000);
+
+  it('Should return 403 Forbidden', function(done) {
+    config.set('access:isProtected', true);
+    browser.visit('/', function() {
+      assert(browser.statusCode == 403, 'Status should be "403 Forbidden"');
+      done();
+    });
+  });
+
+  it('Should allow access after providing access token', function(done) {
+    config.set('access:isProtected', true);
+    browser.visit('/', function() {
+      browser.fill('#token', config.get('access:token'));
+      browser.document.forms[0].submit();
+      browser.wait().then(function() {
+        assert.ok(browser.success);
+        done();
+      });
+    });
+  });
+
 });
 
 describe('Pages', function() {
@@ -72,8 +109,8 @@ describe('Search', function() {
   // Ensure we have time for request to resolve, etc.
   this.timeout(20000);
 
-  it('Should return results without search', function (done) {
-    browser.visit('/', function () {
+  it('Should return results without search', function(done) {
+    browser.visit('/', function() {
       assert.ok(browser.success);
       // There should be pagination on the top and at the bottom of a page
       browser.assert.elements('.pagination', {exactly: 2});
@@ -82,13 +119,13 @@ describe('Search', function() {
     });
   });
 
-  it('Should find at least one item', function (done) {
-    browser.visit('/', function () {
+  it('Should find at least one item', function(done) {
+    browser.visit('/', function() {
       assert.ok(browser.success);
       var searchPhrase = browser.text('.search-results-item:first-of-type h4');
       browser.fill('#filters_search', searchPhrase);
       browser.document.forms[0].submit();
-      browser.wait().then(function () {
+      browser.wait().then(function() {
         browser.assert.elements('.search-results-item', {atLeast: 1});
         done();
       });
