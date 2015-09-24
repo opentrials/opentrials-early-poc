@@ -77,15 +77,21 @@ function getItem(id) {
       var promises = [];
 
       // Load associated data
+      promises.push(item.getSource());
       promises.push(item.getConditions());
       promises.push(item.getDocuments());
       promises.push(item.getDrugs());
+      promises.push(item.getReviews());
+      promises.push(item.getMethods());
 
       // Wait for all data ready
       Promise.all(promises).then(function(results) {
-        item.conditions = results[0];
-        item.documents = results[1];
-        item.drugs = results[2];
+        item.source = results[0];
+        item.conditions = results[1];
+        item.documents = results[2];
+        item.drugs = results[3];
+        item.reviews = results[4];
+        item.methods = results[5];
         resolve(item);
       });
     }).catch(reject);

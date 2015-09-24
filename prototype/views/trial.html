@@ -4,10 +4,18 @@
 
 {% set notAvailable = 'N/A' %}
 
-<section class="row">
-  <h2 class="col-xs-12">Overview</h2>
+{% macro longtext(s, max = 200) %}
+  {% if s.length > max %}
+    {{ s.substr(0, max) }}...
+  {% else %}
+    {{ s }}
+  {% endif %}
+{% endmacro %}
 
-  <div class="col-xs-12 margin-bottom-10">
+<section class="clearfix margin-bottom-10">
+  <h2>Overview</h2>
+
+  <div class="margin-bottom-10">
     <div class="pull-left margin-right-30">
       Condition: <strong>{{ trial.conditionOrProblem }}</strong>
       {% if trial.condition.technicalName %}
@@ -17,7 +25,7 @@
   </div>
 
   {% if trial.drugs.length > 0 %}
-  <div class="col-xs-12 margin-bottom-10">
+  <div class="margin-bottom-10">
     <div class="pull-left margin-right-30">
       Treatment:
       {% for drug in trial.drugs %}
@@ -27,7 +35,7 @@
   </div>
   {% endif %}
 
-  <div class="col-xs-12 margin-bottom-10">
+  <div class="margin-bottom-10">
     <div class="pull-left margin-right-30">
       <i class="glyphicon glyphicon-calendar margin-right-4"></i>
       {% if trial.dateFrom or trial.dateTo %}
@@ -63,156 +71,216 @@
     </div>
   </div>
 </section>
+<hr>
 
-<section class="row">
-  <h2 class="col-xs-12">Associated documents (stub)</h2>
-  <div class="col-xs-12">
-    <div class="pull-left margin-right-30">
-      <div>
-        <a href="javascript:void(0)" class="text-muted">
-          <i class="glyphicon glyphicon-pencil text-success"></i>
-          Registry entry
-        </a>
-      </div>
-      <div>
-        <a href="javascript:void(0)" class="text-muted">
-          <i class="glyphicon glyphicon-pencil text-success"></i>
-          Secondary registry entry
-        </a>
-      </div>
-      <div>
-        <a href="javascript:void(0)" class="text-muted">
-          <i class="glyphicon glyphicon-pencil text-success"></i>
-          Trial protocol
-        </a>
-      </div>
-    </div>
-
-    <div class="pull-left margin-right-30">
-      <div>
-        <a href="javascript:void(0)" class="text-muted">
-          <i class="glyphicon glyphicon-list-alt text-success"></i>
-          Registry results
-        </a>
-      </div>
-      <div>
-        <a href="javascript:void(0)" class="text-muted">
-          <i class="glyphicon glyphicon-list-alt text-danger"></i>
-          Academic paper results
-        </a>
-      </div>
-      <div>
-        <a href="javascript:void(0)" class="text-muted">
-          <i class="glyphicon glyphicon-list-alt text-danger"></i>
-          Clinical study report
-        </a>
-      </div>
-      <div>
-        <a href="javascript:void(0)" class="text-muted">
-          <i class="glyphicon glyphicon-list-alt text-info"></i>
-          Regulatory results filling
-        </a>
-      </div>
-    </div>
+<section>
+  <h2>Trial</h2>
+  <div class="table-responsive">
+  <table class="table table-bordered" cellspacing="0" cellpadding="0" border="0">
+    <thead>
+      <tr>
+        <th>Public title</th>
+        <th>Scientific title</th>
+        <th>Date from</th>
+        <th>Date to</th>
+        <th>Sample size</th>
+        <th>Age from</th>
+        <th>Age to</th>
+        <th>Sex</th>
+        <th>Source of funding</th>
+        <th>Countries</th>
+        <th>Contacts</th>
+        <th>Notes</th>
+        <th>Exclusion criteria</th>
+        <th>Interventions</th>
+        <th>Outcomes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>{{ trial.publicTitle }}</td>
+        <td>{{ trial.scientificTitle }}</td>
+        <td>{{ trial.dateFrom }}</td>
+        <td>{{ trial.dateTo }}</td>
+        <td>{{ trial.sampleSize }}</td>
+        <td>{{ trial.ageFrom }}</td>
+        <td>{{ trial.ageTo }}</td>
+        <td>{{ trial.sex.toString() }}</td>
+        <td>{{ trial.sourceOfFunding }}</td>
+        <td>{{ trial.countries }}</td>
+        <td>{{ trial.contacts }}</td>
+        <td>{{ longtext(trial.notes) }}</td>
+        <td>{{ longtext(trial.exclusionCriteria) }}</td>
+        <td>{{ longtext(trial.interventions.toString()) }}</td>
+        <td>{{ longtext(trial.outcomes.toString()) }}</td>
+      </tr>
+    </tbody>
+  </table>
   </div>
 </section>
 
-<div class="row">
-<section class="col-sm-9">
-
-  <section class="row">
-    <h2 class="col-xs-12">Patient information (stub)</h2>
-    <div class="col-xs-12">
-      {{ trial.intervention }}
-    </div>
-  </section>
-
-  <section class="row">
-    <h2 class="col-xs-12">Individual patient data (stub)</h2>
-    <div class="col-xs-12">
-      <p>
-        Maecenas quis nisi velit. Cras quis porttitor quam. Nunc feugiat eros id
-        eros congue porta. Mauris nec odio eu nisl commodo ultricies non eget
-        diam. Donec at libero sed dui mollis bibendum. Nullam pretium feugiat
-        massa sit amet tristique. Donec bibendum laoreet vehicula. Integer
-        commodo vitae purus quis lobortis.
-      </p>
-    </div>
-  </section>
-
-  <section class="row">
-    <h2 class="col-xs-12">Help us to improve this data (stub)</h2>
-    <ul class="col-xs-12">
-      <li>
-        Donec tempor eros euismod eros malesuada, id ullamcorper odio euismod.
-        Donec metus lacus, facilisis ac pellentesque eget, semper a leo.
-      </li>
-      <li>
-        Phasellus commodo, eros eu porta aliquet, lacus ligula fringilla enim,
-        sed commodo velit est quis enim.
-      </li>
-      <li>
-        Vestibulum blandit diam et lacus sodales, a tempor lorem luctus.
-      </li>
-      <li>
-        Sed felis augue, egestas id bibendum non, vestibulum ultrices ipsum.
-        Vestibulum eget auctor quam.
-      </li>
-      <li>
-        Fusce dictum augue a ipsum suscipit scelerisque. Nunc vulputate non
-        tellus ut pretium. Etiam elementum consequat metus vitae ornare.
-      </li>
-    </ul>
-  </section>
-
-</section>
-
-<section class="trial-page-sidebar col-sm-3 margin-top-20">
-  <div class="clearfix margin-bottom-30">
-    <div>Conducted in</div>
-    <div><strong>Maryland, USA</strong></div>
-    <div>
-      <i class="glyphicon glyphicon-star text-success pull-left"></i>
-      <i class="glyphicon glyphicon-star text-success pull-left"></i>
-      <i class="glyphicon glyphicon-star text-success pull-left"></i>
-      <i class="glyphicon glyphicon-star text-success pull-left"></i>
-      <i class="glyphicon glyphicon-star-empty text-muted pull-left"></i>
-
-      {% set tooltip = 'Sed consequat bibendum dolor non rutrum.\nDuis fermentum eu odio quis tempor.' %}
-      <i class="glyphicon glyphicon-info-sign text-muted pull-left margin-left-60"
-        data-toggle="tooltip" data-placement="left"
-        title="{{ tooltip }}"></i>
-    </div>
-  </div>
-
-  <div class="clearfix margin-bottom-30">
-    <div>Sponsor</div>
-    <div><strong>NIMH</strong></div>
-    <div>
-      <i class="glyphicon glyphicon-star text-success pull-left"></i>
-      <i class="glyphicon glyphicon-star text-success pull-left"></i>
-      <i class="glyphicon glyphicon-star text-success pull-left"></i>
-      <i class="glyphicon glyphicon-star-empty text-muted pull-left"></i>
-      <i class="glyphicon glyphicon-star-empty text-muted pull-left"></i>
-
-      {% set tooltip = 'In pharetra pharetra sapien varius pharetra. Etiam a viverra augue.' %}
-      <i class="glyphicon glyphicon-info-sign text-muted pull-left margin-left-60"
-         data-toggle="tooltip" data-placement="left"
-         title="{{ tooltip }}"></i>
-    </div>
-  </div>
-
-  <div class="clearfix margin-bottom-30">
-    <div><strong>See also</strong></div>
-    <div><a href="javascript:void(0)">Varius pharetra</a></div>
-    <div><a href="javascript:void(0)">Bibendum dolor non rutrum</a></div>
-    <div><a href="javascript:void(0)">Odio quis tempor</a></div>
-  </div>
-
-  <div>
-    <a class="btn btn-primary" href="javascript:void(0)">Add information</a>
+<section>
+  <h2>Source</h2>
+  <div class="table-responsive">
+  <table class="table table-bordered" cellspacing="0" cellpadding="0" border="0">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Category</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>{{ trial.source.title }}</td>
+        <td>{{ longtext(trial.source.description) }}</td>
+        <td>{{ trial.source.category }}</td>
+      </tr>
+    </tbody>
+  </table>
   </div>
 </section>
-</div>
+
+<section>
+  <h2>Reviews</h2>
+  <div class="table-responsive">
+  <table class="table table-bordered" cellspacing="0" cellpadding="0" border="0">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Link</th>
+        <th>Title</th>
+        <th>Notes</th>
+        <th>Contacts</th>
+        <th>Abstract</th>
+        <th>Language</th>
+        <th>Authors</th>
+        <th>Publisher</th>
+        <th>Journal</th>
+        <th>Year</th>
+        <th>Volume</th>
+        <th>Issue</th>
+        <th>Pages</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in trial.reviews %}
+      <tr>
+        <td>{{ item.type }}</td>
+        <td>{{ item.link }}</td>
+        <td>{{ item.title }}</td>
+        <td>{{ longtext(item.notes) }}</td>
+        <td>{{ item.contacts }}</td>
+        <td>{{ longtext(item.abstract) }}</td>
+        <td>{{ item.language }}</td>
+        <td>{{ item.authors }}</td>
+        <td>{{ item.publisher }}</td>
+        <td>{{ item.journal }}</td>
+        <td>{{ item.year }}</td>
+        <td>{{ item.volume }}</td>
+        <td>{{ item.issue }}</td>
+        <td>{{ item.pages }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<section>
+  <h2>Drugs</h2>
+  <div class="table-responsive">
+  <table class="table table-bordered" cellspacing="0" cellpadding="0" border="0">
+    <thead>
+      <tr>
+        <th>Technical name</th>
+        <th>Trade name</th>
+        <th>WHO DDE</th>
+        <th>Category</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in trial.drugs %}
+      <tr>
+        <td>{{ item.technicalName }}</td>
+        <td>{{ item.tradeName }}</td>
+        <td>{{ item.whoDde }}</td>
+        <td>{{ item.category }}</td>
+        <td>{{ item.description }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<section>
+  <h2>Methods</h2>
+  <div class="table-responsive">
+  <table class="table table-bordered" cellspacing="0" cellpadding="0" border="0">
+    <thead>
+      <tr>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in trial.methods %}
+      <tr>
+        <td>{{ item.description }}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<section>
+  <h2>Conditions</h2>
+  <div class="table-responsive">
+  <table class="table table-bordered" cellspacing="0" cellpadding="0" border="0">
+    <thead>
+      <tr>
+        <th>Meddra</th>
+        <th>WHO ICD10</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in trial.conditions %}
+      <tr>
+        <td>{{ item.meddra }}</td>
+        <td>{{ item.whoIcd10 }}</td>
+        <td>{{ item.description }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<section>
+  <h2>Documents</h2>
+  <div class="table-responsive">
+  <table class="table table-bordered" cellspacing="0" cellpadding="0" border="0">
+    <thead>
+      <tr>
+        <th>Tag</th>
+        <th>Type</th>
+        <th>Contents <i>(BINARY DATA)</i></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in trial.documents %}
+      <tr>
+        <td>{{ item.tag }}</td>
+        <td>{{ item.type }}</td>
+        <td><i>({{ item.contents.length }} byte(s))</i></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  </div>
+</section>
 
 {% endblock %}
