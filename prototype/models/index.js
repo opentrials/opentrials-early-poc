@@ -9,6 +9,7 @@ var Umzug = require('umzug');
 var basename = path.basename(module.filename);
 var migrationsDir = path.join(module.filename, '/../../migrations');
 var umzug;
+var sequelize;
 var db = {};
 
 var dbConfig = require('../config').get('database');
@@ -17,8 +18,12 @@ dbConfig.define = {
   timestamps: false
 };
 
-var sequelize = new Sequelize(dbConfig.database, dbConfig.username,
-  dbConfig.password, dbConfig);
+if (dbConfig.url) {
+  sequelize = new Sequelize(dbConfig.url, dbConfig);
+} else {
+  sequelize = new Sequelize(dbConfig.database, dbConfig.username,
+    dbConfig.password, dbConfig);
+}
 
 umzug = new Umzug({
   storage: 'sequelize',
