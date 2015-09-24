@@ -8,8 +8,6 @@ var views = path.join(__dirname, '/views');
 var router = require('./routes/index');
 var config = require('./config');
 
-app.disable('etag');
-
 app.set('config', config);
 
 app.use(router);
