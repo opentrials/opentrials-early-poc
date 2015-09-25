@@ -5,7 +5,7 @@ var searchService = require('./services/search');
 
 var port = app.get('config').get('appconfig:port');
 
-searchService.prepareIndex().then(function() {
+searchService.init().then(function() {
   app.listen(port, function() {
     console.log('Open Trials is being served at :' + port);
   });
