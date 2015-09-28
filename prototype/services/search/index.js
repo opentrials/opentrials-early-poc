@@ -29,7 +29,7 @@ function search(filters) {
       }
     }
     Promise.all(promises).then(function(results) {
-      var ids = lodash.intersection.apply(null, results.slice(1));
+      var ids = lodash.intersection.apply(null, results);
       resolve(ids);
     }).catch(reject);
   });

@@ -46,11 +46,11 @@
     <label for="filters_sample_size">Sample size:</label>
     <div class="row">
       <div class="col-xs-6">
-        <input type="text" name="filter[sample_size][]" value="{{ filterParams.sample_size[0] }}"
+        <input type="text" name="filter[sample_size][min]" value="{{ filterParams.sample_size.min }}"
           class="form-control" id="filters_sample_size" placeholder="from">
       </div>
       <div class="col-xs-6">
-        <input type="text" name="filter[sample_size][]" value="{{ filterParams.sample_size[1] }}"
+        <input type="text" name="filter[sample_size][max]" value="{{ filterParams.sample_size.max }}"
           class="form-control" placeholder="to">
       </div>
     </div>
