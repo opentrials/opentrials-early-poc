@@ -40,6 +40,12 @@ function search(values) {
   });
 }
 
+search.lookup = function(phrase, limit) {
+  return new Promise(function(resolve, reject) {
+    resolve([]);
+  });
+};
+
 search.init = function(sequelize) {
   db = sequelize;
 };

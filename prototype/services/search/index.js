@@ -35,6 +35,12 @@ function search(filters) {
   });
 }
 
+search.lookup = function(phrase, limit) {
+  return new Promise(function(resolve, reject) {
+    resolve([]);
+  });
+};
+
 search.init = function() {
   return new Promise(function(resolve, reject) {
     var promises = [];

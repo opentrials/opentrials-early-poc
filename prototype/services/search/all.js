@@ -10,6 +10,12 @@ function search() {
   });
 }
 
+search.lookup = function(phrase, limit) {
+  return new Promise(function(resolve, reject) {
+    resolve([]);
+  });
+};
+
 search.init = function(sequelize) {
   return new Promise(function(resolve, reject) {
     var sql = 'SELECT id FROM trial';

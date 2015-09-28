@@ -4,13 +4,15 @@
   <div class="form-group col-sm-8">
     <label for="filters_search">Search:</label>
     <input type="text" name="filter[phrase]" value="{{ filterParams.phrase }}"
-      id="filters_search" class="form-control" placeholder="Search in title, description, etc.">
+      id="filters_search" class="form-control" data-lookup="phrase"
+      placeholder="Search in title, description, etc.">
   </div>
 
   <div class="form-group col-sm-4">
     <label for="filters_condition">Condition:</label>
     <input type="text" name="filter[condition]" value="{{ filterParams.condition }}"
-      class="form-control" id="filters_condition" placeholder="Search in trial conditions">
+      class="form-control" id="filters_condition" data-lookup="condition"
+      placeholder="Search in trial conditions">
   </div>
 
   <div class="form-group col-sm-4">
@@ -27,7 +29,8 @@
   <div class="form-group col-sm-4">
     <label for="filters_intervention">Intervention:</label>
     <input type="text" name="filter[intervention]" value="{{ filterParams.intervention }}"
-      class="form-control" id="filters_intervention" placeholder="Search in trial interventions">
+      class="form-control" id="filters_intervention" data-lookup="intervention"
+      placeholder="Search in trial interventions">
   </div>
 
   <div class="form-group col-sm-4">
