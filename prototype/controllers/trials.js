@@ -36,8 +36,7 @@ function trialsList(request, response, next) {
 function trialDetails(request, response, next) {
   trialsService.getItem(request.params.id).then(function(item) {
     response.render('trial.html', {
-      title: 'Trial #' + request.params.id + ' ' + item.publicTitle,
-      subtitle: item.scientificTitle,
+      title: item.publicTitle,
       trial: item
     });
   }).catch(function() {
