@@ -23,6 +23,12 @@ function search(phrase) {
   });
 }
 
+search.lookup = function(phrase, limit) {
+  return new Promise(function(resolve, reject) {
+    resolve([]);
+  });
+};
+
 search.init = function(sequelize) {
   index = createIndex();
   return new Promise(function(resolve, reject) {

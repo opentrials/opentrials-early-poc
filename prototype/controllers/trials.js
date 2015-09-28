@@ -4,6 +4,7 @@ var express = require('express');
 
 var paginationService = require('../services/pagination');
 var trialsService = require('../services/trials');
+var searchService = require('../services/search');
 
 function trialsList(request, response, next) {
   // Initialize pagination
@@ -43,8 +44,27 @@ function trialDetails(request, response, next) {
   });
 }
 
+function searchLookup(request, response, next) {
+  var filter = request.query.filter || '';
+  var value = request.query.value || '';
+  var indexes = searchService.indexes;
+
+  var promise = null;
+  if (indexes.hasOwnProperty(filter) && (value != '')) {
+    promise = indexes[filter].lookup(value);
+  } else {
+    promise = searchService.lookup(value);
+  }
+  promise.then(function(results) {
+    response.json(results);
+  }).catch(function() {
+    return next();
+  });
+}
+
 var router = express.Router();
 router.get('/', trialsList);
 router.get('/trial/:id', trialDetails);
+router.get('/search/lookup', searchLookup);
 
 module.exports = router;
