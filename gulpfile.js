@@ -122,7 +122,8 @@ function distAppIcon() {
 function distVendorStyles() {
   return gulp
     .src([
-      nodeModulesDir + '/bootstrap/dist/css/bootstrap.min.css'
+      nodeModulesDir + '/bootstrap/dist/css/bootstrap.min.css',
+      nodeModulesDir + '/font-awesome/css/font-awesome.min.css'
     ])
     .pipe(concat(vendorCSS))
     .pipe(gulp.dest(publicStylesDir));
@@ -131,7 +132,8 @@ function distVendorStyles() {
 function distVendorFonts() {
   return gulp
     .src([
-      nodeModulesDir + '/bootstrap/dist/fonts/*'
+      nodeModulesDir + '/bootstrap/dist/fonts/*',
+      nodeModulesDir + '/font-awesome/fonts/*'
     ])
     .pipe(gulp.dest(publicFontsDir));
 }

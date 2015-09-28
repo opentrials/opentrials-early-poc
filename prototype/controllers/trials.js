@@ -22,7 +22,8 @@ function trialsList(request, response, next) {
   trialsService.getItems(pagination, filterParams).then(function(items) {
     response.render('index.html', {
       title: 'Find a trial',
-      subtitle: 'Proin mattis non neque vitae dapibus',
+      subtitle: 'The prototype currently features a single dataset ' +
+        'of schizophrenia trial data',
       filterParams: filterParams,
       trials: items,
       pagination: pagination
@@ -35,8 +36,7 @@ function trialsList(request, response, next) {
 function trialDetails(request, response, next) {
   trialsService.getItem(request.params.id).then(function(item) {
     response.render('trial.html', {
-      title: 'Trial #' + request.params.id + ' ' + item.publicTitle,
-      subtitle: item.scientificTitle,
+      title: item.publicTitle,
       trial: item
     });
   }).catch(function() {

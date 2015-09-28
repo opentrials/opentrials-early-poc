@@ -5,6 +5,16 @@ $ = jQuery = require('jquery');
   $(function() {
     $('[data-toggle="tooltip"]').tooltip();
 
+    $('body')
+      .on('click', '.ot-collapsed-text .button-expand', function() {
+        $(this).parents('.ot-collapsed-text').eq(0).addClass('expanded')
+          .find('.block-contents').slideDown(150);
+      })
+      .on('click', '.ot-collapsed-text .button-collapse', function() {
+        $(this).parents('.ot-collapsed-text').eq(0).removeClass('expanded')
+          .find('.block-contents').slideUp(150);
+      });
+
     $('[data-lookup]').each(function() {
       var input = $(this);
       input.autoComplete({

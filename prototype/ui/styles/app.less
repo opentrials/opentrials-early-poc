@@ -77,6 +77,14 @@ a:hover, a:focus {
   margin-right: 4px;
 }
 
+.margin-right-10 {
+  margin-right: 10px;
+}
+
+.margin-bottom-4 {
+  margin-bottom: 4px;
+}
+
 .margin-top-20 {
   margin-top: 20px;
 }
@@ -99,6 +107,33 @@ a:hover, a:focus {
 
 ul, li {
   list-style-position: inside;
+  padding-left: 0.5em;
+}
+
+ul.unstyled, ul.unstyled li,
+ol.unstyled, ol.unstyled li {
+  list-style: none;
+}
+
+.ot-collapsed-text .block-contents {
+  overflow: hidden;
+  display: none;
+}
+
+.ot-collapsed-text .button-expand {
+  display: inline-block;
+}
+
+.ot-collapsed-text .button-collapse {
+  display: none;
+}
+
+.ot-collapsed-text.expanded .button-expand {
+  display: none;
+}
+
+.ot-collapsed-text.expanded .button-collapse {
+  display: inline-block;
 }
 
 .glyphicon.ot-logo {
