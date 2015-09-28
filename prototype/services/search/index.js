@@ -11,7 +11,7 @@ var indexes = {
   intervention: require('./intervention'),
   country: require('./country'),
   source: require('./source'),
-  sample_size: require('./sample-size'),
+  sampleSize: require('./sample-size'),
   sex: require('./sex')
 };
 
@@ -54,5 +54,7 @@ search.init = function() {
     }).catch(reject);
   });
 };
+
+search.indexes = indexes;
 
 module.exports = search;

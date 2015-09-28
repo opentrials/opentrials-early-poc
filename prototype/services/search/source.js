@@ -4,10 +4,14 @@ var Promise = require('bluebird');
 var lodash = require('lodash');
 var lunr = require('lunr');
 
-var index = lunr(function() {
-  this.ref('id');
-  this.field('text');
-});
+function createIndex() {
+  return lunr(function() {
+    this.ref('id');
+    this.field('text');
+  });
+}
+
+var index = createIndex();
 
 function search(phrase) {
   return new Promise(function(resolve, reject) {
@@ -20,6 +24,7 @@ function search(phrase) {
 }
 
 search.init = function(sequelize) {
+  index = createIndex();
   return new Promise(function(resolve, reject) {
     var sql = 'SELECT t.id AS id, s.title AS text ' +
       'FROM source AS s ' +
