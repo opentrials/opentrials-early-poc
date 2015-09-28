@@ -8,16 +8,7 @@ function pageAbout(request, response) {
   });
 }
 
-function pageContacts(request, response) {
-
-  response.render('contacts.html', {
-    title: 'Contacts'
-  });
-
-}
-
 var router = express.Router();
-router.get('/contacts', pageContacts);
 router.get('/about', pageAbout);
 
 module.exports = router;
