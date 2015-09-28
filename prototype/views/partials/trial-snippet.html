@@ -1,0 +1,58 @@
+{% set notAvailable = 'N/A' %}
+
+{% if trial.conditionOrProblem %}
+<div class="margin-bottom-10 clearfix">
+  <div class="pull-left margin-right-30">
+    Condition: <strong>{{ trial.conditionOrProblem }}</strong>
+  </div>
+</div>
+{% endif %}
+
+{% if trial.drugs.length > 0 %}
+<div class="margin-bottom-10 clearfix">
+  <div class="pull-left margin-right-30">
+    Treatment:
+    {% for drug in trial.drugs %}
+    <span>{{ drug.technicalName }}</span>
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+
+<div class="margin-bottom-10 clearfix">
+  {% if trial.countries %}
+  <div class="pull-left margin-right-30">
+    <i class="fa fa-flag margin-right-4"></i>
+    {{ trial.countries }}
+  </div>
+  {% endif %}
+
+  {% if trial.dateFrom or trial.dateTo %}
+  <div class="pull-left margin-right-30">
+    <i class="fa fa-calendar margin-right-4"></i>
+    {{ trial.dateFrom if trial.dateFrom else notAvailable }} -
+    {{ trial.dateTo if trial.dateTo else notAvailable }}
+  </div>
+  {% endif %}
+
+  {% if isNumeric(trial.sampleSize) %}
+  <div class="pull-left margin-right-30">
+    <span class="badge">{{ trial.sampleSize }}</span> Participants
+  </div>
+  {% endif %}
+
+  {% if trial.sex.length > 0 %}
+  {% set joinPlus = joiner(' + ') %}
+  <div class="pull-left margin-right-30">
+    {% for sex in trial.sex %}{{ joinPlus() }}<i class="fa fa-{{ sex.toLowerCase() }}"></i>{% endfor %}
+  </div>
+  {% endif %}
+
+  {% if trial.ageFrom or trial.ageTo %}
+  <div class="pull-left">
+    <span><i class="fa fa-user margin-right-4"></i>Aged</span>
+    {{ trial.ageFrom if trial.ageFrom else notAvailable }} -
+    {{ trial.ageTo if trial.ageTo else notAvailable }}
+  </div>
+  {% endif %}
+</div>

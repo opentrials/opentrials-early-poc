@@ -22,7 +22,8 @@ function trialsList(request, response, next) {
   trialsService.getItems(pagination, filterParams).then(function(items) {
     response.render('index.html', {
       title: 'Find a trial',
-      subtitle: 'Proin mattis non neque vitae dapibus',
+      subtitle: 'The prototype currently features a single dataset ' +
+        'of schizophrenia trial data',
       filterParams: filterParams,
       trials: items,
       pagination: pagination
