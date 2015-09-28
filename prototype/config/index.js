@@ -11,6 +11,7 @@ nconf.file({
 nconf.defaults({
   env: process.env.NODE_ENV || 'development',
   database: {
+    url: process.env.DATABASE_URL || null,
     username: process.env.DB_USER || 'postgres',
     password: process.env.DB_PASS || 'root',
     database: process.env.DB_NAME || 'postgres',

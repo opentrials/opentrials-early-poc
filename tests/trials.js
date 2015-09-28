@@ -1,21 +1,32 @@
 'use strict';
 
+// Set this before initializing config
+process.env.NODE_ENV = 'test';
+
 var Browser = require('zombie');
 var assert = require('chai').assert;
 var lodash = require('lodash');
 var paginationService = require('../prototype/services/pagination');
+var searchService = require('../prototype/services/search');
 var trialsService = require('../prototype/services/trials');
+
+before(function(done) {
+  this.timeout(20000);
+  searchService.init().then(function() {
+    done();
+  });
+});
 
 describe('Trials Service', function() {
   this.timeout(20000);
 
-  it('Should fail when item does not exist', function (done) {
+  it('Should fail when item does not exist', function(done) {
     trialsService.getItem(0).catch(function(){
       done();
     });
   });
 
-  it('Should get a trial with all properties', function (done) {
+  it('Should get a trial with all properties', function(done) {
     trialsService.getItem(200).then(function(item) {
       assert.property(item, 'conditions');
       assert.property(item, 'documents');
@@ -24,7 +35,7 @@ describe('Trials Service', function() {
     });
   });
 
-  it('Should get trials using pagination', function (done) {
+  it('Should get trials using pagination', function(done) {
     var pagination = paginationService.create({
       itemsPerPage: 20,
       currentPage: 1
@@ -35,7 +46,7 @@ describe('Trials Service', function() {
     });
   });
 
-  it('Should get trials by IDs', function (done) {
+  it('Should get trials by IDs', function(done) {
     var pagination = paginationService.create({
       itemsPerPage: 20,
       currentPage: 1
@@ -46,7 +57,7 @@ describe('Trials Service', function() {
     });
   });
 
-  it('Should search trials', function (done) {
+  it('Should search trials', function(done) {
     trialsService.getItem(200).then(function(item) {
       var pagination = paginationService.create({
         itemsPerPage: 20,
@@ -54,7 +65,7 @@ describe('Trials Service', function() {
       });
       trialsService.getItems(pagination, {
         phrase: item.publicTitle
-      }).then(function (items) {
+      }).then(function(items) {
         assert.isAbove(items.length, 0);
         done();
       });

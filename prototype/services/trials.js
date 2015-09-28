@@ -23,7 +23,7 @@ function getItems(pagination, idsOrFilterParams) {
         resolve(idsOrFilterParams);
       });
     } else {
-      searchPromise = searchService.searchTrials(idsOrFilterParams);
+      searchPromise = searchService(idsOrFilterParams);
     }
 
     // Query trials using IDs (if any)

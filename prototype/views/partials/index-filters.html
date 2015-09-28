@@ -1,44 +1,63 @@
 <form class="clearfix row" method="get" action="">
   <input type="hidden" name="filter[apply]" value="1">
+
   <div class="form-group col-sm-8">
     <label for="filters_search">Search:</label>
-    <div class="input-group">
-      <input type="text" name="filter[phrase]" value="{{ filterParams.phrase }}"
-        id="filters_search" class="form-control" placeholder="Search">
-      <span class="input-group-btn">
-        <button class="btn btn-default"
-          type="submit"><i class="glyphicon glyphicon-search"></i></button>
-      </span>
-    </div>
-  </div>
-
-  <div class="form-group col-sm-2">
-    <label for="filters_age">Age:</label>
-    <input type="text" name="filter[age]" value="{{ filterParams.age }}"
-      class="form-control" id="filters_age" placeholder="Enter age, to filter on age range">
-  </div>
-
-  <div class="form-group col-sm-2">
-    <label for="filters_year">Year:</label>
-    <input type="text" name="filter[year]" value="{{ filterParams.year }}"
-      class="form-control" id="filters_year" placeholder="Enter year, to filter on trial period">
-  </div>
-
-  <div class="form-group col-sm-4">
-    <label for="filters_country">Country:</label>
-    <input type="text" name="filter[country]" value="{{ filterParams.country }}"
-      class="form-control" id="filters_country" placeholder="Enter country, to filter on trial location">
-  </div>
-
-  <div class="form-group col-sm-4">
-    <label for="filters_drug">Drug:</label>
-    <input type="text" name="filter[drug]" value="{{ filterParams.drug }}"
-      class="form-control" id="filters_drug" placeholder="Enter drug, to filter on trial drug">
+    <input type="text" name="filter[phrase]" value="{{ filterParams.phrase }}"
+      id="filters_search" class="form-control" placeholder="Search in title, description, etc.">
   </div>
 
   <div class="form-group col-sm-4">
     <label for="filters_condition">Condition:</label>
     <input type="text" name="filter[condition]" value="{{ filterParams.condition }}"
-      class="form-control" id="filters_condition" placeholder="Enter condition, to filter on trial condition">
+      class="form-control" id="filters_condition" placeholder="Search in trial conditions">
+  </div>
+
+  <div class="form-group col-sm-4">
+    <label for="filters_sex">Sex:</label>
+    <select name="filter[sex]" class="form-control" id="filters_sex">
+      <option value="" {{ 'selected="on"' if filterParams.sex == '' else '' }}>Any</option>
+      <option value="none" {{ 'selected="on"' if filterParams.sex == 'none' else '' }}>None</option>
+      <option value="male" {{ 'selected="on"' if filterParams.sex == 'male' else '' }}>Male</option>
+      <option value="female" {{ 'selected="on"' if filterParams.sex == 'female' else '' }}>Female</option>
+      <option value="both" {{ 'selected="on"' if filterParams.sex == 'both' else '' }}>Both</option>
+    </select>
+  </div>
+
+  <div class="form-group col-sm-4">
+    <label for="filters_intervention">Intervention:</label>
+    <input type="text" name="filter[intervention]" value="{{ filterParams.intervention }}"
+      class="form-control" id="filters_intervention" placeholder="Search in trial interventions">
+  </div>
+
+  <div class="form-group col-sm-4">
+    <label for="filters_country">Country:</label>
+    <input type="text" name="filter[country]" value="{{ filterParams.country }}"
+      class="form-control" id="filters_country" placeholder="Search by country">
+  </div>
+
+  <div class="form-group col-sm-4">
+    <label for="filters_source">Source:</label>
+    <input type="text" name="filter[source]" value="{{ filterParams.source }}"
+      class="form-control" id="filters_source" placeholder="Search by source title">
+  </div>
+
+  <div class="form-group col-sm-4">
+    <label for="filters_sample_size">Sample size:</label>
+    <div class="row">
+      <div class="col-xs-6">
+        <input type="text" name="filter[sampleSize][min]" value="{{ filterParams.sampleSize.min }}"
+          class="form-control" id="filters_sample_size" placeholder="from">
+      </div>
+      <div class="col-xs-6">
+        <input type="text" name="filter[sampleSize][max]" value="{{ filterParams.sampleSize.max }}"
+          class="form-control" placeholder="to">
+      </div>
+    </div>
+  </div>
+
+  <div class="clearfix col-xs-12 text-right">
+    <button type="submit" class="btn btn-primary">Apply</button>
+    <a href="/" class="btn btn-default">Reset</a>
   </div>
 </form>

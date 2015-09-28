@@ -26,7 +26,7 @@ function trialsList(request, response, next) {
       trials: items,
       pagination: pagination
     });
-  }).catch(function() {
+  }).catch(function(error) {
     return next();
   });
 }

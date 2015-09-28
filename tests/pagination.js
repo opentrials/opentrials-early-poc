@@ -1,5 +1,8 @@
 'use strict';
 
+// Set this before initializing config
+process.env.NODE_ENV = 'test';
+
 var Browser = require('zombie');
 var assert = require('chai').assert;
 var lodash = require('lodash');
@@ -13,20 +16,20 @@ describe('Pagination Service', function() {
     itemsPerPage: 20
   });
 
-  it('Should restrict currentPage when it is out of range', function (done) {
+  it('Should restrict currentPage when it is out of range', function(done) {
     assert.equal(pagination.currentPage, 1);
     assert.equal(pagination.currentPageValue, 4);
     done();
   });
 
-  it('Should return currentPage when it is in allowed range', function (done) {
+  it('Should return currentPage when it is in allowed range', function(done) {
     pagination.itemsCount = 10 * pagination.itemsPerPage;
     assert.equal(pagination.currentPage, 4);
     assert.equal(pagination.currentPageValue, 4);
     done();
   });
 
-  it('Should validate itemsPerPage', function (done) {
+  it('Should validate itemsPerPage', function(done) {
     pagination.itemsPerPage = -10;
     assert.equal(pagination.itemsPerPage, 20);
     pagination.itemsPerPage = 10;
@@ -34,7 +37,7 @@ describe('Pagination Service', function() {
     done();
   });
 
-  it('Should validate itemsCount', function (done) {
+  it('Should validate itemsCount', function(done) {
     pagination.itemsCount = -10;
     assert.equal(pagination.itemsCount, 0);
     pagination.itemsCount = 10;
