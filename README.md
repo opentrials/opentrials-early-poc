@@ -1,4 +1,4 @@
-# Open Trails Prototype: Cochrane Schizophrenia Data
+# Open Trails Prototype App
 
 ## Development
 
