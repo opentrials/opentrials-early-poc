@@ -29,6 +29,7 @@ function trialsList(request, response, next) {
       pagination: pagination
     });
   }).catch(function(error) {
+    console.log(error);
     return next();
   });
 }
@@ -39,7 +40,8 @@ function trialDetails(request, response, next) {
       title: item.publicTitle,
       trial: item
     });
-  }).catch(function() {
+  }).catch(function(error) {
+    console.log(error);
     return next();
   });
 }
@@ -57,7 +59,8 @@ function searchLookup(request, response, next) {
   }
   promise.then(function(results) {
     response.json(results);
-  }).catch(function() {
+  }).catch(function(error) {
+    console.log(error);
     return next();
   });
 }

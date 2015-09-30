@@ -55,7 +55,7 @@ search.init = function(sequelize) {
   promises.push(new Promise(function(resolve, reject) {
     var sql = 'SELECT id, ' +
       'ARRAY_TO_STRING(interventions, \' \') AS text ' +
-      'FROM trial';
+      'FROM ' + sequelize.options.schema + '.trial';
     sequelize.query(sql, {type: sequelize.QueryTypes.SELECT})
       .then(function(records) {
         for (var i = 0; i < records.length; i++) {
@@ -69,7 +69,8 @@ search.init = function(sequelize) {
   }));
 
   promises.push(new Promise(function(resolve, reject) {
-    var sql = 'SELECT DISTINCT UNNEST(interventions) AS text FROM trial';
+    var sql = 'SELECT DISTINCT UNNEST(interventions) AS text ' +
+      'FROM ' + sequelize.options.schema + '.trial';
     sequelize.query(sql, {type: sequelize.QueryTypes.SELECT})
       .then(function(records) {
         for (var i = 0; i < records.length; i++) {

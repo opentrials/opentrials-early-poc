@@ -56,13 +56,15 @@ search.init = function(sequelize) {
     var sql = 'SELECT t.id, REGEXP_REPLACE(x.condition || \' \' || ' +
       't.condition_or_problem, \'^\\s+([^\\s]*)\\s+$\', \'$1\') AS text ' +
       'FROM ( ' +
-      'SELECT t2c.trial_id, ' +
-      'ARRAY_TO_STRING(ARRAY_AGG(c.description), \' \') AS condition ' +
-      'FROM trial2condition as t2c ' +
-      'LEFT JOIN condition AS c ON t2c.condition_id = c.id ' +
-      'GROUP BY t2c.trial_id ' +
+        'SELECT t2c.trial_id, ' +
+        'ARRAY_TO_STRING(ARRAY_AGG(c.description), \' \') AS condition ' +
+        'FROM ' + sequelize.options.schema + '.trial2condition as t2c ' +
+        'LEFT JOIN ' + sequelize.options.schema + '.condition AS c ' +
+        'ON t2c.condition_id = c.id ' +
+        'GROUP BY t2c.trial_id ' +
       ') AS x ' +
-      'LEFT JOIN trial AS t ON x.trial_id = t.id';
+      'LEFT JOIN ' + sequelize.options.schema + '.trial AS t ' +
+      'ON x.trial_id = t.id';
     sequelize.query(sql, {type: sequelize.QueryTypes.SELECT})
       .then(function(records) {
         for (var i = 0; i < records.length; i++) {
@@ -77,11 +79,12 @@ search.init = function(sequelize) {
 
   promises.push(new Promise(function(resolve, reject) {
     var sql = 'SELECT DISTINCT c.description AS text ' +
-      'FROM trial2condition as t2c ' +
-      'LEFT JOIN condition AS c ON t2c.condition_id = c.id ' +
+      'FROM ' + sequelize.options.schema + '.trial2condition as t2c ' +
+      'LEFT JOIN ' + sequelize.options.schema + '.condition AS c ' +
+      'ON t2c.condition_id = c.id ' +
       'UNION DISTINCT ' +
       'SELECT DISTINCT t.condition_or_problem AS text ' +
-      'FROM trial t';
+      'FROM ' + sequelize.options.schema + '.trial t';
     sequelize.query(sql, {type: sequelize.QueryTypes.SELECT})
       .then(function(records) {
         for (var i = 0; i < records.length; i++) {

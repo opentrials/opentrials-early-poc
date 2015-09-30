@@ -13,6 +13,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false
     }
   }, {
+    schema: sequelize.options.schema,
     tableName: 'trial2condition'
   });
 

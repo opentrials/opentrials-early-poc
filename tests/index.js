@@ -78,27 +78,17 @@ describe('Pages', function() {
     });
   });
 
-  it('Should contain text "About"', function(done) {
+  it('Should open "About" page', function(done) {
     browser.visit('/about', function() {
       assert.ok(browser.success);
-      assert.equal(browser.text('h1'), 'About');
       done();
     });
   });
 
-  it('Should contain text "Contacts"', function(done) {
-    browser.visit('/contacts', function() {
-      assert.ok(browser.success);
-      assert.equal(browser.text('h1'), 'Contacts');
-      done();
-    });
-  });
-
-  it('Should contain ID of trial', function(done) {
+  it('Should open "Trial details" page', function(done) {
     var trialId = 200;
     browser.visit('/trial/' + trialId, function() {
       assert.ok(browser.success);
-      assert.include(browser.text('h1'), '#' + trialId);
       done();
     });
   });

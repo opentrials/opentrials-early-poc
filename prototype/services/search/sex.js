@@ -30,8 +30,8 @@ function search(values) {
       })
       .value()
       .join(',');
-    var sql = 'SELECT id FROM trial WHERE sex = ARRAY[' + values +
-      ']::sex_type[]';
+    var sql = 'SELECT id FROM ' + sequelize.options.schema + '.trial ' +
+      'WHERE sex = ARRAY[' + values + ']::sex_type[]';
     db.query(sql, {type: db.QueryTypes.SELECT, replacements: values})
       .then(function(records) {
         var result = [];
