@@ -18,7 +18,7 @@ search.lookup = function(phrase, limit) {
 
 search.init = function(sequelize) {
   return new Promise(function(resolve, reject) {
-    var sql = 'SELECT id FROM trial';
+    var sql = 'SELECT id FROM ' + sequelize.options.schema + '.trial';
     sequelize.query(sql, {type: sequelize.QueryTypes.SELECT})
       .then(function(records) {
         ids = [];

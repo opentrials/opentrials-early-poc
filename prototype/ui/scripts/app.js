@@ -21,7 +21,7 @@ $ = jQuery = require('jquery');
         minChars: 2,
         delay: 200,
         cache: false,
-        source: function (term, suggest) {
+        source: function(term, suggest) {
           $.get('/search/lookup', {
             filter: input.attr('data-lookup'),
             value: term

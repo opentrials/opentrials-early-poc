@@ -13,10 +13,6 @@ var sequelize;
 var db = {};
 
 var dbConfig = require('../config').get('database');
-dbConfig.logging = function(str) {};
-dbConfig.define = {
-  timestamps: false
-};
 
 if (dbConfig.url) {
   sequelize = new Sequelize(dbConfig.url, dbConfig);
@@ -25,11 +21,24 @@ if (dbConfig.url) {
     dbConfig.password, dbConfig);
 }
 
+sequelize.define('SequelizeMeta', {
+  name: {
+    type: Sequelize.STRING(100),
+    allowNull: false,
+    unique: true,
+    primaryKey: true,
+    autoIncrement: false
+  }
+}, {
+  schema: sequelize.options.schema,
+  tableName: 'sequelizemeta'
+});
+
 umzug = new Umzug({
   storage: 'sequelize',
   storageOptions: {
     sequelize: sequelize,
-    modelName: 'sequelizemeta'
+    modelName: 'SequelizeMeta'
   },
   migrations: {
     params: [sequelize.getQueryInterface(), Sequelize],

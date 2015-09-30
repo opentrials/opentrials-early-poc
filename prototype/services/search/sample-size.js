@@ -28,7 +28,9 @@ function search(values) {
       where.push('(sample_size::int <= ' + max + ')');
     }
 
-    var sql = 'SELECT id FROM trial WHERE ' + where.join(' AND ');
+    var sql = 'SELECT id ' +
+      'FROM ' + sequelize.options.schema + '.trial ' +
+      'WHERE ' + where.join(' AND ');
     db.query(sql, {type: db.QueryTypes.SELECT})
       .then(function(records) {
         var result = [];

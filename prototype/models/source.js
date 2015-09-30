@@ -19,6 +19,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true
     }
   }, {
+    schema: sequelize.options.schema,
     tableName: 'source'
   });
 

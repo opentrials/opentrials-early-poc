@@ -54,7 +54,8 @@ search.init = function(sequelize) {
 
   promises.push(new Promise(function(resolve, reject) {
     var sql = 'SELECT id, public_title || \' \' || ' +
-      'scientific_title AS text FROM trial';
+      'scientific_title AS text ' +
+      'FROM ' + sequelize.options.schema + '.trial';
     sequelize.query(sql, {type: sequelize.QueryTypes.SELECT})
       .then(function(records) {
         for (var i = 0; i < records.length; i++) {
@@ -68,9 +69,11 @@ search.init = function(sequelize) {
   }));
 
   promises.push(new Promise(function(resolve, reject) {
-    var sql = 'SELECT DISTINCT public_title AS text FROM trial ' +
+    var sql = 'SELECT DISTINCT public_title AS text ' +
+      'FROM ' + sequelize.options.schema + '.trial ' +
       'UNION DISTINCT ' +
-      'SELECT DISTINCT scientific_title AS text FROM trial';
+      'SELECT DISTINCT scientific_title AS text ' +
+      'FROM ' + sequelize.options.schema + '.trial';
     sequelize.query(sql, {type: sequelize.QueryTypes.SELECT})
       .then(function(records) {
         for (var i = 0; i < records.length; i++) {

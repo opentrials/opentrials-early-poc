@@ -18,11 +18,12 @@ nconf.defaults({
     host: process.env.DB_HOST || 'localhost',
     port: process.env.DB_PORT || 5432,
     dialect: process.env.DB_DIALECT || 'postgres',
+    schema: process.env.DB_SCHEMA || 'public',
     logging: false,
     define: {
       charset: 'utf-8',
       collate: 'utf8_general_ci',
-      timestamps: true
+      timestamps: false
     }
   },
   session: {

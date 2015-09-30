@@ -32,7 +32,8 @@ search.lookup = function(phrase, limit) {
 search.init = function(sequelize) {
   index = createIndex();
   return new Promise(function(resolve, reject) {
-    var sql = 'SELECT id, countries AS text FROM trial';
+    var sql = 'SELECT id, countries AS text ' +
+      'FROM ' + sequelize.options.schema + '.trial';
     sequelize.query(sql, {type: sequelize.QueryTypes.SELECT})
       .then(function(records) {
         for (var i = 0; i < records.length; i++) {

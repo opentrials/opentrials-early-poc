@@ -8,8 +8,10 @@ var nunjucksGlobals = require('nunjucks/src/globals');
 var views = path.join(__dirname, '/views');
 var router = require('./routes/index');
 var config = require('./config');
+var models = require('./models');
 
 app.set('config', config);
+app.set('models', models);
 
 app.use(router);
 

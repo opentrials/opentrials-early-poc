@@ -33,8 +33,9 @@ search.init = function(sequelize) {
   index = createIndex();
   return new Promise(function(resolve, reject) {
     var sql = 'SELECT t.id AS id, s.title AS text ' +
-      'FROM source AS s ' +
-      'LEFT JOIN trial AS t ON t.source_id = s.id';
+      'FROM ' + sequelize.options.schema + '.source AS s ' +
+      'LEFT JOIN ' + sequelize.options.schema + '.trial AS t ' +
+      'ON t.source_id = s.id';
     sequelize.query(sql, {type: sequelize.QueryTypes.SELECT})
       .then(function(records) {
         for (var i = 0; i < records.length; i++) {

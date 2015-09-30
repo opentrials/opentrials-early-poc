@@ -116,6 +116,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true
     }
   }, {
+    schema: sequelize.options.schema,
     tableName: 'trial',
     classMethods: {
       associate: function(models) {
